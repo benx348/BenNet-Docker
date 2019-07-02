@@ -1,0 +1,229 @@
+version: '3.2'
+
+services:
+#__________________________________________________________________________________
+# Torrent Stack
+
+    # Deluge Torrent Client
+  Deluge:
+    image: linuxserver/deluge
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_deluge
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8001:8112/tcp
+    - 8002:58846/tcp
+
+#----------------------------------------------------------------------------------
+  # Sonarr NZB Manager for TV Shows
+
+  Sonarr:
+    image: linuxserver/sonarr
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_sonarr
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_tv
+      target: /tv
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8003:8989/tcp
+
+#--------------------------------------------------------------------------------------------
+  # Sonarr NZB Manager for Movies
+
+  Radarr:
+    image: linuxserver/radarr
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_radarr
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_movies
+      target: /movies
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8004:7878/tcp
+
+#--------------------------------------------------------------------------------------------
+  # Sonarr NZB Manager for Movies
+
+  Lidarr:
+    image: linuxserver/lidarr
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_lidarr
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_music
+      target: /music
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8005:8686/tcp
+
+#--------------------------------------------------------------------------------------------
+  # Jackett Torret Site Proxy Service
+
+  Jackett:
+    image: linuxserver/jackett
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_jacket_data
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_jacket_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8006:9117/tcp
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
+# Networks
+
+networks:
+#--------------------------
+  Torrent_Network:
+    driver: overlay
+    attachable: true
+
+#____________________________________________________________________________________________________________________________________________________________________________________________________________
+# Network Volume Mappings (NFS)
+
+volumes:
+
+#--------------------------------
+
+# BenNetNAS Media Volumes
+
+  bennetnas_downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Downloads"
+#--------------------------------
+  bennetnas_tv:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/TV"
+#--------------------------------      
+  bennetnas_movies:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Movies"
+#--------------------------------      
+  bennetnas_music:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Music"
+
+#---------------------------------------------------------------------------------------------  
+
+# Torrent Stack Persistant Data NFS Volumes (On BenNetNAS) 
+
+  bennetnas_deluge:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/deluge_data"
+#-----------------------------------------
+  bennetnas_sonarr:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/sonarr_data"
+#-----------------------------------------
+  bennetnas_radarr:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/radarr_data"
+#-----------------------------------------
+  bennetnas_jacket_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/jacket_data"
+#-----------------------------------------
+  bennetnas_jacket_downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/jacket_data/downloads"
+#-----------------------------------------
+  bennetnas_lidarr:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/lidarr_data"
+
+#-----------------------------------------------------------------------------------------------  
+  
