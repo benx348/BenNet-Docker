@@ -38,6 +38,8 @@ networks:
   portainer_network:
     driver: overlay
     attachable: true
+    internal: true 
+    external: true 
 
 volumes:
   portainer_data:
