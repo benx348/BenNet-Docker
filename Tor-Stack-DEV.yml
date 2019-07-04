@@ -59,7 +59,7 @@ services:
     - 8003:8989/tcp
 
 #--------------------------------------------------------------------------------------------
-  # Sonarr NZB Manager for Movies
+  # Radarr NZB Manager for Movies
 
   Radarr:
     image: linuxserver/radarr
@@ -89,7 +89,27 @@ services:
     - 8004:7878/tcp
 
 #--------------------------------------------------------------------------------------------
-  # Sonarr NZB Manager for Movies
+  # Muximux NZB web front end
+
+  Muximux:
+    image: linuxserver/muximux
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_muximux
+      target: /config
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8008:80/tcp
+
+#--------------------------------------------------------------------------------------------
+  # Lidarr NZB Manager for Movies
 
   Lidarr:
     image: linuxserver/lidarr
@@ -224,6 +244,12 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/lidarr_data"
+#-----------------------------------------
+  bennetnas_muximux:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/muximux_data"
 
 #-----------------------------------------------------------------------------------------------  
   
