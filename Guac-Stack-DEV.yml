@@ -54,7 +54,7 @@ services:
     - guacd
     - postgres
     environment:
-      GUACD_HOSTNAME: guacd
+      GUACD_HOSTNAME: Guacamole_Deamon
       POSTGRES_DATABASE: guacamole_db
       POSTGRES_HOSTNAME: Guac_Postgres
       POSTGRES_PASSWORD: qwer1234
