@@ -1,45 +1,66 @@
+# This Stack File Deploys Portainer Server(Pinned to the manager node) and Portainer Agent(distributed among all the nodes) for Portainer on docker swarm.
+#
 version: '3.2'
-
+#______________________________________________________________________________________________
 services:
-  Portainer_Agent:
-    image: portainer/agent
+#-------------------------
+  Portainer_Agent: # Service/Container Name
+#-------------------------
+    image: portainer/agent # Image to be pulled from docker/hub
+#-------------------------
     environment:
-      # REQUIRED: Should be equal to the service name prefixed by "tasks." when
-      # deployed inside an overlay network
+      # REQUIRED: Should be equal to the service name prefixed by "tasks." when deployed inside an overlay network
       AGENT_CLUSTER_ADDR: tasks.Portainer_Agent
       # AGENT_PORT: 9001
       # LOG_LEVEL: debug
+#-------------------------
+#   This volumes most stay mapped to the local docker.sock file for Portainer Functionality 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
+#-------------------------
     networks:
       - portainer_network
+#-------------------------
+# This section of code will make sure that a replica of this service/container is placed on all the nodes in the swarm
     deploy:
       mode: global
       placement:
         constraints: [node.platform.os == linux]
-
+#----------------------------------------------------------------------------------------------
   Portainer_Server:
-    image: portainer/portainer
+#-------------------------
+    image: portainer/portainer # Image to be pulled from docker/hub
+#-------------------------
+# This command verifies/accepts the TLS key that is used on the agent services/containers (must be tcp://tasks.portaineragent:9001)
     command: -H tcp://tasks.Portainer_Agent:9001 --tlsskipverify
+#-------------------------
+# External ports to be published 
     ports:
       - "9000:9000"
+#-------------------------
     volumes:
       - portainer_data:/data
+#-------------------------
     networks:
       - portainer_network
+#-------------------------
+# This section of code will make sure that only one of these services/containers exist and that its pinned to a manager node.
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints: [node.role == manager]
+#______________________________________________________________________________________________
+# This is the overlay network created for the Portainer Services
 
 networks:
   portainer_network:
     driver: overlay
     attachable: true
     internal: true 
-
+#______________________________________________________________________________________________
+# This is the mapped persistant data volume used by Portainer Server which maps to bennetnas/
 volumes:
   portainer_data:
     driver_opts:
