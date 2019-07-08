@@ -32,7 +32,7 @@ services:
 #-------------------------
     image: portainer/portainer # Image to be pulled from docker/hub
 #-------------------------
-# This command verifies/accepts the TLS key that is used on the agent services/containers (must be tcp://tasks.portaineragent:9001)
+# This command verifies/accepts the TLS key that is used on the agent services/containers (must be tcp://tasks.SERVICENAME:9001)
     command: -H tcp://tasks.Portainer_Agent:9001 --tlsskipverify
 #-------------------------
 # External ports to be published 
