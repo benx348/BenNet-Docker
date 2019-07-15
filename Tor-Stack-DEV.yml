@@ -166,7 +166,7 @@ services:
 #--------------------------------------------------------------------------------------------
   # Filebot file manipulation software.
 
-  Jackett:
+  Filebot:
     image: jlesage/filebot
     environment:
       PUID: 1000
