@@ -187,6 +187,25 @@ services:
       - Torrent_Network
     ports:
     - 8009:5800/tcp
+#--------------------------------------------------------------------------------------------
+  # Organizr Web interface front end organizer
+
+  Organizr:
+    image: linuxserver/organizr
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_organizr
+      target: /config
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8010:80/tcp
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
@@ -281,6 +300,12 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/filebot_data"
+#-----------------------------------------
+  bennetnas_organizr:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/organizr_data"
 
 #-----------------------------------------------------------------------------------------------  
   
