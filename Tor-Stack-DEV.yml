@@ -59,7 +59,7 @@ services:
     - 8003:8989/tcp
 
 #--------------------------------------------------------------------------------------------
-  # Radarr NZB Manager for Movies
+  # Sonarr NZB Manager for Movies
 
   Radarr:
     image: linuxserver/radarr
@@ -109,7 +109,7 @@ services:
     - 8008:80/tcp
 
 #--------------------------------------------------------------------------------------------
-  # Lidarr NZB Manager for Movies
+  # Sonarr NZB Manager for Movies
 
   Lidarr:
     image: linuxserver/lidarr
@@ -149,7 +149,7 @@ services:
       TZ: EST
     volumes:
     - type: volume
-      source: bennetnas_jacket_data
+      source: bennetnas_jacket
       target: /config
       volume:
         nocopy: true
@@ -163,6 +163,50 @@ services:
     ports:
     - 8006:9117/tcp
 
+#--------------------------------------------------------------------------------------------
+  # Filebot file manipulation software.
+
+  Filebot:
+    image: jlesage/filebot
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_filebot
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_downloads
+      target: /storage
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8009:5800/tcp
+#--------------------------------------------------------------------------------------------
+  # Organizr Web interface front end organizer
+
+  Organizr:
+    image: linuxserver/organizr
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - type: volume
+      source: bennetnas_organizr
+      target: /config
+      volume:
+        nocopy: true
+    networks:
+      - Torrent_Network
+    ports:
+    - 8010:80/tcp
+
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
@@ -171,7 +215,6 @@ networks:
   Torrent_Network:
     driver: overlay
     attachable: true
-    internal: true 
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
 # Network Volume Mappings (NFS)
@@ -228,7 +271,7 @@ volumes:
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/radarr_data"
 #-----------------------------------------
-  bennetnas_jacket_data:
+  bennetnas_jacket:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
@@ -251,6 +294,18 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/muximux_data"
+#-----------------------------------------
+  bennetnas_filebot:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/filebot_data"
+#-----------------------------------------
+  bennetnas_organizr:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/organizr_data"
 
 #-----------------------------------------------------------------------------------------------  
   
