@@ -6,7 +6,7 @@ services:
 
 # Guacamole Deamon
 
-  Guacamole_Deamon:
+  Guacamole:
     image: oznu/guacamole
     networks:
       - Guacamole_Network
