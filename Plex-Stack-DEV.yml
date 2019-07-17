@@ -97,7 +97,7 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/DEV/Docker/Plex-Stack/plex_data/plex_data_transcode"
+      device: ":/volume1/DEV/Docker/Plex-Stack/plex_data_transcode"
 #--------------------------------------------------------------------------------------------- 
 # BenNetNAS Media Volumes
   bennetnas_plex_downloads:
