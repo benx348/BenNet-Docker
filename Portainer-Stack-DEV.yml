@@ -1,0 +1,64 @@
+#____________________________________________________________________________________________
+# Poratiner Stack has all the necessary component for Portainer to work on Docker Swarm
+
+version: '3.2'
+
+services:
+#____________________________________________________________________________________________
+# Portainer Agent is deployed to all nodes in cluster for Portainer Server
+  Portainer_Agent:
+    image: portainer/agent
+#---------------------------------------------------------------
+    environment:
+# REQUIRED: Should be equal to the service name prefixed by "tasks." when
+# deployed inside an overlay network
+      AGENT_CLUSTER_ADDR: tasks.Portainer_Agent
+#     AGENT_PORT: 9001
+#     LOG_LEVEL: debug
+#---------------------------------------------------------------
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+#---------------------------------------------------------------
+    networks:
+      - portainer_network
+#---------------------------------------------------------------
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+#____________________________________________________________________________________________
+
+
+  Portainer_Server:
+    image: portainer/portainer
+#---------------------------------------------------------------
+# This is used to connect the agent back to the sever make sure the agent service name is after task.
+    command: -H tcp://tasks.Portainer_Agent:9001 --tlsskipverify
+#---------------------------------------------------------------
+    ports:
+      - "9000:9000"
+#---------------------------------------------------------------
+    volumes:
+      - portainer_data:/data
+#---------------------------------------------------------------
+    networks:
+      - portainer_network
+#---------------------------------------------------------------
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+#____________________________________________________________________________________________
+networks:
+  portainer_network:
+    driver: overlay
+    attachable: true
+#____________________________________________________________________________________________
+volumes:
+  portainer_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Portainer-Stack/portainer_data"

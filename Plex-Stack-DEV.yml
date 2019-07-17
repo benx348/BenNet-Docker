@@ -1,0 +1,96 @@
+version: '3.2'
+# Plex Stack
+services:
+#____________________________________________________________________________________________
+# Plex Server Software 
+  Plex_Server:
+    image: plexinc/pms-docker
+#---------------------------------------------------------------
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+      ADVERTISE_IP: http://192.168.9.150:32400/
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_plex_data
+      target: /config
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_plex_trans_data
+      target: /transcode
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_media
+      target: /media
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    networks:
+      - Plex_Network
+#---------------------------------------------------------------
+    ports:
+    - 32400:32400/tcp
+    - 3005:3005/tcp
+    - 8324:8324/tcp
+    - 32469:32469/tcp
+    - 1900:1900/udp
+    - 32410:32410/udp
+    - 32412:32412/udp
+    - 32413:32413/udp
+    - 32414:32414/udp
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
+# Networks
+
+networks:
+
+  Plex_Network:
+    driver: overlay
+    attachable: true
+    internal: true 
+
+
+#____________________________________________________________________________________________________________________________________________________________________________________________________________
+# Network Volume Mappings (NFS)
+
+volumes:
+
+#Plex Stack Persistant Data NFS Volumes (On BenNetNAS)
+#--------------------------------------------------------------------------------------------- 
+  bennetnas_plex_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/plex_data"
+#-----------------------------------------
+  bennetnas_plex_trans_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/plex_data_transcode"
+#--------------------------------------------------------------------------------------------- 
+# BenNetNAS Media Volumes
+  bennetnas_downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Downloads"
+#-----------------------------------------
+  bennetnas_media:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media"
+  
