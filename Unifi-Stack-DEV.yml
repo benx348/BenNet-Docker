@@ -7,17 +7,21 @@ services:
   # UbiquiTi Controller Software 
   Unifi_Controller:
     image: linuxserver/unifi
+#---------------------------------------------------------------
     environment:
       PUID: 1000
       GUID: 1000
+#---------------------------------------------------------------
     volumes:  
     - type: volume
       source: bennetnas_unifi_data
       target: /config
       volume:
         nocopy: true
+#---------------------------------------------------------------
     networks:
       - Unifi_Network
+#---------------------------------------------------------------
     ports:
     - 443:443/tcp
     - 443:443/udp
@@ -39,7 +43,6 @@ networks:
   Unifi_Network:
     driver: overlay
     attachable: true
-    internal: true 
 
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -53,5 +56,5 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/unifi_data"
+      device: ":/volume1/Docker/DEV/Unifi-Stack/unifi_data"
   
