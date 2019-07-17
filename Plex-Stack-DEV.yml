@@ -26,32 +26,14 @@ services:
         nocopy: true
 #-----------------------------------------
     - type: volume
-      source: bennetnas_plex_downloads
-      target: /data/media/downloads
+      source: bennetnas_downloads
+      target: /downloads
       volume:
         nocopy: true
 #-----------------------------------------
     - type: volume
-      source: bennetnas_plex_tv
-      target: /data/media/tv
-      volume:
-        nocopy: true
-#-----------------------------------------
-    - type: volume
-      source: bennetnas_plex_movies
-      target: /data/media/movies
-      volume:
-        nocopy: true
-#-----------------------------------------
-    - type: volume
-      source: bennetnas_plex_documentary
-      target: /data/media/documentary
-      volume:
-        nocopy: true
-#-----------------------------------------
-    - type: volume
-      source: bennetnas_plex_documentary_movies
-      target: /data/media/documentary_movies
+      source: bennetnas_media
+      target: /media
       volume:
         nocopy: true
 #---------------------------------------------------------------
@@ -100,33 +82,15 @@ volumes:
       device: ":/volume1/Docker/DEV/Plex-Stack/plex_data_transcode"
 #--------------------------------------------------------------------------------------------- 
 # BenNetNAS Media Volumes
-  bennetnas_plex_downloads:
+  bennetnas_downloads:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Downloads"
 #-----------------------------------------
-  bennetnas_plex_tv:
+  bennetnas_media:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Media/TV"
-#-----------------------------------------
-  bennetnas_plex_movies:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Media/Movies"
-#-----------------------------------------
-  bennetnas_plex_documentary:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Media/Documentary"
-#-----------------------------------------
-  bennetnas_plex_documentary_movies:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Media/Documentary Movies"
+      device: ":/volume1/Media"
   
