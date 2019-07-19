@@ -300,55 +300,55 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/deluge_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/deluge_data"
 #-----------------------------------------
   bennetnas_sonarr:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/sonarr_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/sonarr_data"
 #-----------------------------------------
   bennetnas_radarr:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/radarr_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/radarr_data"
 #-----------------------------------------
   bennetnas_jacket:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/jacket_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/jacket_data"
 #-----------------------------------------
   bennetnas_jacket_downloads:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/jacket_data/downloads"
+      device: ":/volume1/Docker/PROD/Tor-Stack/jacket_data/downloads"
 #-----------------------------------------
   bennetnas_lidarr:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/lidarr_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/lidarr_data"
 #-----------------------------------------
   bennetnas_muximux:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/muximux_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/muximux_data"
 #-----------------------------------------
   bennetnas_filebot:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/filebot_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/filebot_data"
 #-----------------------------------------
   bennetnas_organizr:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Tor-Stack/organizr_data"
+      device: ":/volume1/Docker/PROD/Tor-Stack/organizr_data"
 
 #-----------------------------------------------------------------------------------------------  
   

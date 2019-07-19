@@ -56,5 +56,5 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Unifi-Stack/unifi_data"
+      device: ":/volume1/Docker/PROD/Unifi-Stack/unifi_data"
   

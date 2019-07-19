@@ -61,4 +61,4 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Portainer-Stack/portainer_data"
+      device: ":/volume1/Docker/PROD/Portainer-Stack/portainer_data"
