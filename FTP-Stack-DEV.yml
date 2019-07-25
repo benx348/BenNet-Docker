@@ -45,7 +45,7 @@ volumes:
 
 #-----------------------------------------------------------------------------------------------  
 
-# Guacamole Stack Persistant Data NFS Volumes (On BenNetNAS)
+# FTP Stack Persistant Data NFS Volumes (On BenNetNAS)
 
   bennetnas_ftp_config:
     driver_opts:
