@@ -2,41 +2,45 @@ version: '3.2'
 
 services:
 #____________________________________________________________________________________________
-# Pure FTPD Stack
+# Unifi Stack
 
   # UbiquiTi Controller Software 
-  Pure_FTP:
-    image: vimagick/pure-ftpd
+  Unifi_Controller:
+    image: linuxserver/unifi
 #---------------------------------------------------------------
-    privileged: true
-#---------------------------------------------------------------
-    volumes:  
-    - type: volume
-      source: bennetnas_ftp_home
-      target: /home/ftpuser
-      volume:
-        nocopy: true
+    environment:
+      PUID: 1000
+      GUID: 1000
 #---------------------------------------------------------------
     volumes:  
     - type: volume
-      source: bennetnas_ftp_data
-      target: /etc/pure-ftpd
+      source: bennetnas_unifi_data
+      target: /config
       volume:
         nocopy: true
 #---------------------------------------------------------------
     networks:
-      - FTP_Network
+      - Unifi_Network
 #---------------------------------------------------------------
     ports:
-    - 21:21/tcp
-
+    - 443:443/tcp
+    - 443:443/udp
+    - 3478:3478/udp
+    - 3478:3478/tcp
+    - 8883:8883/tcp
+    - 10001:10001/udp
+    - 8080:8080/tcp
+    - 8081:8081/tcp
+    - 8443:8443/tcp
+    - 8880:8880/tcp
+    - 6789:6789/tcp
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
 networks:
 
-  FTP_Network:
+  Unifi_Network:
     driver: overlay
     attachable: true
 
@@ -46,17 +50,11 @@ networks:
 
 volumes:
 
-#FTP Stack Persistant Data NFS Volumes (On BenNetNAS)
+#Unifi Stack Persistant Data NFS Volumes (On BenNetNAS)
 
-  bennetnas_ftp_home:
+  bennetnas_unifi_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/FTP-Stack/ftp_home"
-#-------------------------------------------------------------
-  bennetnas_ftp_data:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/FTP-Stack/ftp_data"
+      device: ":/volume1/Docker/DEV/Unifi-Stack/unifi_data"
   
