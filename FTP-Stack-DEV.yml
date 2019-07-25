@@ -1,60 +1,66 @@
 version: '3.2'
 
 services:
-#____________________________________________________________________________________________
-# Pure FTPD Stack
+#__________________________________________________________________________________
+# Pure FTP Stack
 
-  # UbiquiTi Controller Software 
-  Pure_FTP:
-    image: vimagick/pure-ftpd
+# Pure FTP
+
+  Guacamole:
+    image: stilliard/pure-ftpd
 #---------------------------------------------------------------
-    volumes:  
+    networks:
+      - FTP_network
+#---------------------------------------------------------------
+    volumes:
+    - type: volume
+      source: bennetnas_ftp_config
+      target: /etc/pure-ftpd/passwd
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    volumes:
     - type: volume
       source: bennetnas_ftp_home
       target: /home
       volume:
         nocopy: true
 #---------------------------------------------------------------
-    volumes:  
-    - type: volume
-      source: bennetnas_ftp_data
-      target: /etc/pure-ftpd
-      volume:
-        nocopy: true
-#---------------------------------------------------------------
-    networks:
-      - FTP_Network
-#---------------------------------------------------------------
     ports:
     - 21:21/tcp
-
+    - 3000-3009:3000-3009/tcp
+    - 3000-3009:3000-3009/udp
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
 networks:
 
-  FTP_Network:
+  FTP_Network: 
     driver: overlay
     attachable: true
-
 
 #____________________________________________________________________________________________________________________________________________________________________________________________________________
 # Network Volume Mappings (NFS)
 
 volumes:
 
-#FTP Stack Persistant Data NFS Volumes (On BenNetNAS)
+#-----------------------------------------------------------------------------------------------  
 
+# Guacamole Stack Persistant Data NFS Volumes (On BenNetNAS)
+
+  bennetnas_ftp_config:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Guac-Stack/ftp_data"
+#-----------------------------------------
   bennetnas_ftp_home:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/FTP-Stack/ftp_home"
-#-------------------------------------------------------------
-  bennetnas_ftp_data:
-    driver_opts:
-      type: "nfs"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/FTP-Stack/ftp_data"
-  
+#-----------------------------------------
+
+
+#------------------------------------------------------------------------------------------------    
