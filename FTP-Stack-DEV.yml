@@ -10,7 +10,7 @@ services:
     image: stilliard/pure-ftpd
 #---------------------------------------------------------------
     networks:
-      - FTP_network
+      - FTP_Network
 #---------------------------------------------------------------
     volumes:
     - type: volume
