@@ -10,7 +10,7 @@ services:
       PUID: 1000
       GUID: 1000
       TZ:   EST
-      ADVERTISE_IP: http://192.168.8.150:32400/
+      ADVERTISE_IP: http://192.168.9.150:32400/
 #---------------------------------------------------------------
     volumes:  
     - type: volume
@@ -52,6 +52,37 @@ services:
     - 32414:32414/udp
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+# Ombi Media Requests 
+  Plex_Server:
+    image: linuxserver/ombi
+#---------------------------------------------------------------
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_ombi_data
+      target: /config
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_plex_ombi_share
+      target: /shared
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    networks:
+      - Plex_Network
+#---------------------------------------------------------------
+    ports:
+    - 8011:3579/tcp
+
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
 networks:
@@ -80,6 +111,19 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/plex_data_transcode"
+#--------------------------------------------------------------------------------------------- 
+# Ombi Persistant Data Volumes NFS (On BenNetNAS)
+  bennetnas_ombi_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/ombi_data"
+#-----------------------------------------
+  bennetnas_plex_ombi_share:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/ombi_share"
 #--------------------------------------------------------------------------------------------- 
 # BenNetNAS Media Volumes
   bennetnas_downloads:
