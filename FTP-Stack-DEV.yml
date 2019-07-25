@@ -15,12 +15,12 @@ services:
 #      volume:
 #        nocopy: true
 #---------------------------------------------------------------
-    volumes:  
-    - type: volume
-      source: bennetnas_ftp_data
-      target: /etc/pure-ftpd
-      volume:
-        nocopy: true
+#    volumes:  
+#    - type: volume
+#      source: bennetnas_ftp_data
+#      target: /etc/pure-ftpd
+#      volume:
+#        nocopy: true
 #---------------------------------------------------------------
     networks:
       - FTP_Network
