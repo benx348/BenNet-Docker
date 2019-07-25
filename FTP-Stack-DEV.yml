@@ -8,12 +8,12 @@ services:
   Pure_FTP:
     image: vimagick/pure-ftpd
 #---------------------------------------------------------------
-    volumes:  
-    - type: volume
-      source: bennetnas_ftp_home
-      target: /home/ftpuser
-      volume:
-        nocopy: true
+#    volumes:  
+#    - type: volume
+#      source: bennetnas_ftp_home
+#      target: /home/ftpuser
+#      volume:
+#        nocopy: true
 #---------------------------------------------------------------
     volumes:  
     - type: volume
