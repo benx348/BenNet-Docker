@@ -83,6 +83,44 @@ services:
 
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
+
+# PlexPy Media Requests 
+  PlexPy_Server:
+    image: linuxserver/tautulli
+#---------------------------------------------------------------
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_plexpy_data
+      target: /config
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_plexpy_logs
+      target: /logs
+      volume:
+        nocopy: true
+#-----------------------------------------
+    - type: volume
+      source: bennetnas_plexpy_share
+      target: /shared
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    networks:
+      - Plex_Network
+#---------------------------------------------------------------
+    ports:
+    - 8012:8181/tcp
+#---------------------------------------------------------------
+    Restart: always  
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
 networks:
@@ -125,6 +163,25 @@ volumes:
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/ombi_share"
 #--------------------------------------------------------------------------------------------- 
+# PlexPy Persistant Data Volumes NFS (On BenNetNAS)
+  bennetnas_plexpy_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_data"
+#-----------------------------------------
+  bennetnas_plexpy_logs:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,ro"
+      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_logs"
+#-----------------------------------------
+  bennetnas_plexpy_share:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_shared"
+#---------------------------------------------------------------------------------------------
 # BenNetNAS Media Volumes
   bennetnas_downloads:
     driver_opts:
