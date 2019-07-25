@@ -8,8 +8,6 @@ services:
   Pure_FTP:
     image: vimagick/pure-ftpd
 #---------------------------------------------------------------
-    privileged: true
-#---------------------------------------------------------------
     volumes:  
     - type: volume
       source: bennetnas_ftp_home
