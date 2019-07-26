@@ -28,10 +28,11 @@ services:
 #---------------------------------------------------------------
     ports:
     - 21:21/tcp
+    - 21:21/udp
     - 11000-11009:11000-11009/tcp
     - 11000-11009:11000-11009/udp
     environment:
-      PUBLICHOST: "localhost"
+      PUBLICHOST: "192.168.8.150"
       FTP_PASSIVE_PORTS: 11000:11009
       --expose: 11000-11009
 
