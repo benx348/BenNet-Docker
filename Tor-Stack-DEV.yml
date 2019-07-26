@@ -39,7 +39,7 @@ services:
   # Sonarr NZB Manager for TV Shows
 
   Sonarr:
-    image: jdfalk/sonarr
+    image: linuxserver/sonarr
 #---------------------------------------------------------------
     environment:
       PUID: 1000
