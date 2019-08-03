@@ -142,45 +142,45 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/plex_data"
+      device: ":/volume1/Docker/PROD/Plex-Stack/plex_data"
 #-----------------------------------------
   bennetnas_plex_trans_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/plex_data_transcode"
+      device: ":/volume1/Docker/PROD/Plex-Stack/plex_data_transcode"
 #--------------------------------------------------------------------------------------------- 
 # Ombi Persistant Data Volumes NFS (On BenNetNAS)
   bennetnas_ombi_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/ombi_data"
+      device: ":/volume1/Docker/PROD/Plex-Stack/ombi_data"
 #-----------------------------------------
   bennetnas_plex_ombi_share:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/ombi_share"
+      device: ":/volume1/Docker/PROD/Plex-Stack/ombi_share"
 #--------------------------------------------------------------------------------------------- 
 # PlexPy Persistant Data Volumes NFS (On BenNetNAS)
   bennetnas_plexpy_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_data"
+      device: ":/volume1/Docker/PROD/Plex-Stack/plexpy_data"
 #-----------------------------------------
   bennetnas_plexpy_logs:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,ro"
-      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_logs"
+      device: ":/volume1/Docker/PROD/Plex-Stack/plexpy_logs"
 #-----------------------------------------
   bennetnas_plexpy_share:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_shared"
+      device: ":/volume1/Docker/PROD/Plex-Stack/plexpy_shared"
 #---------------------------------------------------------------------------------------------
 # BenNetNAS Media Volumes
   bennetnas_downloads:
