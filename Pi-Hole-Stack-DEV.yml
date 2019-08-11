@@ -1,0 +1,70 @@
+version: '3.2'
+
+services:
+#____________________________________________________________________________________________
+# Pi-Hole Stack
+
+  # Pi-Hole Controller Software 
+  Pi-Hole:
+    image: pihole/pihole
+#---------------------------------------------------------------
+    environment:
+      TZ: EST
+      WEBPASSWORD: "qwe123"
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_pi-hole_data
+      target: /config
+      volume:
+        nocopy: true
+#-------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_pi-hole-dns_data
+      target: /config
+      volume:
+        nocopy: true
+#---------------------------------------------------------------        
+    dns:
+      - 127.0.0.1
+      - 8.8.4.4
+#---------------------------------------------------------------
+    networks:
+      - Pi-Hole_Network
+#---------------------------------------------------------------
+    ports:
+    - 53:53/tcp
+    - 53:53/udp
+    - 67:67/udp
+    - 80:80/tcp
+    - 443:443/tcp
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
+# Networks
+
+networks:
+
+  Pi-Hole_Network:
+    driver: overlay
+    attachable: true
+
+
+#____________________________________________________________________________________________________________________________________________________________________________________________________________
+# Network Volume Mappings (NFS)
+
+volumes:
+
+#Unifi Stack Persistant Data NFS Volumes (On BenNetNAS)
+
+  bennetnas_pi-hole_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Pi-Hole-Stack/pi-hole_data"
+#-------------------------------------------------------------  
+  bennetnas_pi-hole-dns_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Pi-Hole-Stack/pi-hole-dns_data"
