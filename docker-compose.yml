@@ -1,8 +1,6 @@
 #version: '3.7'
 #Network for Guacamole Stack to communicate
-networks:
-  guacamole:
-    driver: bridge
+
 # containers
 services:
   # Portainer Docker GUI 
@@ -22,7 +20,7 @@ services:
     - 9000:9000/tcp
 
   # Deluge Torrent Client
-  deluge:
+  pi-hole:
     container_name: Pi-Hole
     image: pihole/pihole:latest
     restart: always
