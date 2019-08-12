@@ -7,12 +7,12 @@ services:
   portainer:
     container_name: Portainer
     image: portainer/portainer
-    restart: always
+#    restart: always
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     - type: volume
       source: bennetnas_portainer_data
-      target: /downloads
+      target: /data
       volume:
         nocopy: true
     network_mode: bridge
