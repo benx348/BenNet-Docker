@@ -1,21 +1,72 @@
+version: '3.2'
+#Network for Guacamole Stack to communicate
+networks:
+  guacamole:
+    driver: bridge
+# containers
 services:
-  pihole:
-    container_name: pihole
-    image: pihole/pihole
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
-    environment:
-      TZ: 'EST'
-      WEBPASSWORD: 'qwe123'
-    # Volumes store your data between container upgrades
+  # Portainer Docker GUI 
+  portainer:
+    container_name: Portainer
+    image: portainer/portainer
+    restart: always
     volumes:
-       - './etc-pihole/:/etc/pihole/'
-       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-#    restart: allways
+    - /var/run/docker.sock:/var/run/docker.sock
+    - type: volume
+      source: bennetnas_portainer_data
+      target: /downloads
+      volume:
+        nocopy: true
+    network_mode: bridge
+    ports:
+    - 9000:9000/tcp
+
+  # Deluge Torrent Client
+  deluge:
+    container_name: Pi-Hole
+    image: pihole/pihole:latest
+    restart: always
+    environment:
+      TZ: 'America/Chicago'
+      WEBPASSWORD: 'qwe123'
+    volumes:
+    - type: volume
+      source: bennetnas_pi-hole_data
+      target: /etc/pihole
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_pi-hole_dnsmasq
+      target: /etc/dnsmasq.d
+      volume:
+        nocopy: true
+    network_mode: host
+#    ports:
+#      - "53:53/tcp"
+#     - "53:53/udp"
+#      - "67:67/udp"
+#      - "80:80/tcp"
+#      - "443:443/tcp"
+
+ 
+#NFS mapped volumes to bennetnas
+volumes:
+  bennetnas_pi-hole_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/DMZ/Pi-Hole/pi-hole_data"
+  bennetnas_pi-hole_dnsmasq:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/DMZ/Pi-Hole/pi-hole_dmsmasq"
+  bennetnas_portainer_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/DMZ/Portainer/portainer_data"
+
+            
+    
+
