@@ -19,7 +19,6 @@ services:
       volume:
         nocopy: true
 #-------------------------------------
-    volumes:  
     - type: volume
       source: bennetnas_pi-hole_data
       target: /etc/pihole
