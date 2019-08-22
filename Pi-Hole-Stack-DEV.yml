@@ -14,15 +14,15 @@ services:
 #---------------------------------------------------------------
     volumes:  
     - type: volume
-      source: bennetnas_pi-hole_data
-      target: /etc/pihole
+      source: bennetnas_pi-hole-dns_data
+      target: /etc/dnsmasq.d
       volume:
         nocopy: true
 #-------------------------------------
     volumes:  
     - type: volume
-      source: bennetnas_pi-hole-dns_data
-      target: /etc/dnsmasq.d
+      source: bennetnas_pi-hole_data
+      target: /etc/pihole
       volume:
         nocopy: true
 #---------------------------------------------------------------        
