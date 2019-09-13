@@ -35,7 +35,12 @@ services:
     - 8001:8112/tcp
     - 8002:58846/tcp
 #---------------------------------------------------------------
-
+# Health Checks still need work
+#    healthcheck:
+#     test: curl --fail -s http://192.168.8.150:8003/ || exit 1
+#      interval: 1m30s
+#      timeout: 10s
+#      retries: 3
 #_____________________________________________________________________________________________
   # Sonarr NZB Manager for TV Shows
 
@@ -72,14 +77,15 @@ services:
     ports:
     - 8003:8989/tcp
 #---------------------------------------------------------------
-    healthcheck:
-      test: curl --fail -s http://192.168.8.150:8003/ || exit 1
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
+# Health Checks still need work
+#    healthcheck:
+#     test: curl --fail -s http://192.168.8.150:8003/ || exit 1
+#      interval: 1m30s
+#      timeout: 10s
+#      retries: 3
 
 #_____________________________________________________________________________________________
-  # Sonarr NZB Manager for Movies
+  # Radarr NZB Manager for Movies
 
   Radarr:
     image: linuxserver/radarr
@@ -115,7 +121,7 @@ services:
     - 8004:7878/tcp
 
 #_____________________________________________________________________________________________
-  # Muximux NZB web front end
+  # Muximux NZB web front end for Torrent Services
 
   Muximux:
     image: linuxserver/muximux
@@ -139,7 +145,7 @@ services:
     - 8008:80/tcp
 
 #_____________________________________________________________________________________________
-  # Lidar NZB Manager for Music
+  # Lidarr NZB Manager for Music
 
   Lidarr:
     image: linuxserver/lidarr
@@ -175,7 +181,7 @@ services:
     - 8005:8686/tcp
 
 #_____________________________________________________________________________________________
-  # Jackett Torret Site Proxy Service
+  # Jackett Torrent Site Proxy Service
 
   Jackett:
     image: linuxserver/jackett
