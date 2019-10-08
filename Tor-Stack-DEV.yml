@@ -232,11 +232,11 @@ services:
     - 8006:9117/tcp
 #---------------------------------------------------------------
 # Health Checks still need work
-    healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:9117" > || exit 1
-     interval: 1m30s
-     timeout: 30s
-     retries: 10 
+#    healthcheck:
+#     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:9117" > || exit 1
+#     interval: 1m30s
+#     timeout: 30s
+#     retries: 10 
 
 #_____________________________________________________________________________________________
   # Filebot file manipulation software.
@@ -269,11 +269,11 @@ services:
     - 8009:5800/tcp
 #---------------------------------------------------------------
 # Health Checks still need work
-    healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:5800" > || exit 1
-     interval: 1m30s
-     timeout: 30s
-     retries: 10 
+#    healthcheck:
+#     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:5800" > || exit 1
+#     interval: 1m30s
+#     timeout: 30s
+#     retries: 10 
 
 #_____________________________________________________________________________________________
   # Organizr Web interface front end organizer
