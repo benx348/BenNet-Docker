@@ -80,6 +80,12 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8011:3579/tcp
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:3579" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
