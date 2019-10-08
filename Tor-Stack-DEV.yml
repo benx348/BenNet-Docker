@@ -41,7 +41,7 @@ services:
      interval: 1m30s
      timeout: 30s
      retries: 10
-     start_period: 40s
+#     start_period: 40s
 #_____________________________________________________________________________________________
   # Sonarr NZB Manager for TV Shows
 
