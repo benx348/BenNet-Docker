@@ -34,6 +34,13 @@ services:
     ports:
     - 8001:8112/tcp
     - 8002:58846/tcp
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8112" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Sonarr NZB Manager for TV Shows
@@ -70,6 +77,13 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8003:8989/tcp
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8989" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Radarr NZB Manager for Movies
@@ -106,6 +120,13 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8004:7878/tcp
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:7878" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 #_____________________________________________________________________________________________
   # Muximux NZB web front end for Torrent Services
 
@@ -129,6 +150,13 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8008:80/tcp
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:80" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Lidarr NZB Manager for Music
@@ -166,6 +194,12 @@ services:
     ports:
     - 8005:8686/tcp
 #---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8686" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Jackett Torrent Site Proxy Service
@@ -197,6 +231,12 @@ services:
     ports:
     - 8006:9117/tcp
 #---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:9117" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Filebot file manipulation software.
@@ -228,6 +268,12 @@ services:
     ports:
     - 8009:5800/tcp
 #---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:5800" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 #_____________________________________________________________________________________________
   # Organizr Web interface front end organizer
@@ -252,6 +298,13 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8010:80/tcp
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:80" > /dev/null || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
 
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
