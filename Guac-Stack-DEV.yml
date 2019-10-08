@@ -24,7 +24,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --fail -s http://192.168.8.150:8007/ || exit 1
+     test: CMD curl --fail -s http://192.168.8.150:8007/ || exit 1
      interval: 1m30s
      timeout: 60s
      retries: 3
