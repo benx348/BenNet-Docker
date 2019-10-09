@@ -37,7 +37,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8112" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:8112/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
@@ -80,7 +80,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8989" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:8989/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
@@ -123,7 +123,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:7878" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:7878/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
@@ -153,10 +153,10 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:80" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:80/ || exit 1
      interval: 1m30s
      timeout: 30s
-     retries: 10 
+     retries: 10  
 
 #_____________________________________________________________________________________________
   # Lidarr NZB Manager for Music
@@ -196,7 +196,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8686" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:8686/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
@@ -301,7 +301,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:80" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:80/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
