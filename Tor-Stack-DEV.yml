@@ -256,7 +256,7 @@ volumes:
 
   bennetnas_deluge:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Tor-Stack/deluge_data"
 #-----------------------------------------
