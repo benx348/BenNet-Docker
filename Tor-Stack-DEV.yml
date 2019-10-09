@@ -127,37 +127,7 @@ services:
      interval: 1m30s
      timeout: 1m
      retries: 10 
-#_____________________________________________________________________________________________
-  # Muximux NZB web front end for Torrent Services
-
-  Muximux:
-    image: linuxserver/muximux
-#---------------------------------------------------------------
-    environment:
-      PUID: 1000
-      GUID: 1000
-      TZ: EST
-#---------------------------------------------------------------
-    volumes:
-    - type: volume
-      source: bennetnas_muximux
-      target: /config
-      volume:
-        nocopy: true
-#---------------------------------------------------------------
-    networks:
-      - Torrent_Network
-#---------------------------------------------------------------
-    ports:
-    - 8008:80/tcp
-#---------------------------------------------------------------
-# Health Checks still need work
-    healthcheck:
-     test: curl --fail -s http://localhost:80/ || exit 1
-     interval: 1m30s
-     timeout: 1m
-     retries: 10  
-
+ 
 #_____________________________________________________________________________________________
   # Lidarr NZB Manager for Music
 
@@ -237,75 +207,6 @@ services:
      interval: 1m30s
      timeout: 1m
      retries: 10 
-
-#_____________________________________________________________________________________________
-  # Filebot file manipulation software.
-
-  Filebot:
-    image: jlesage/filebot
-#---------------------------------------------------------------
-    environment:
-      PUID: 1000
-      GUID: 1000
-      TZ: EST
-#---------------------------------------------------------------
-    volumes:
-    - type: volume
-      source: bennetnas_filebot
-      target: /config
-      volume:
-        nocopy: true
-#-----------------------------------------
-    - type: volume
-      source: bennetnas_downloads
-      target: /storage
-      volume:
-        nocopy: true
-#---------------------------------------------------------------
-    networks:
-      - Torrent_Network
-#---------------------------------------------------------------
-    ports:
-    - 8009:5800/tcp
-#---------------------------------------------------------------
-# Health Checks still need work
-    healthcheck:
-     test: curl --fail -s http://localhost:5800/ || exit 1
-     interval: 1m30s
-     timeout: 1m
-     retries: 10 
-
-#_____________________________________________________________________________________________
-  # Organizr Web interface front end organizer
-
-  Organizr:
-    image: linuxserver/organizr
-#---------------------------------------------------------------
-    environment:
-      PUID: 1000
-      GUID: 1000
-      TZ: EST
-#---------------------------------------------------------------
-    volumes:
-    - type: volume
-      source: bennetnas_organizr
-      target: /config
-      volume:
-        nocopy: true
-#---------------------------------------------------------------
-    networks:
-      - Torrent_Network
-#---------------------------------------------------------------
-    ports:
-    - 8010:80/tcp
-#---------------------------------------------------------------
-# Health Checks still need work
-    healthcheck:
-     test: curl --fail -s http://localhost:80/ || exit 1
-     interval: 1m30s
-     timeout: 1m
-     retries: 10 
-
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
