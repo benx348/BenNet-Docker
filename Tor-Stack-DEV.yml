@@ -39,7 +39,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:8112/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #_____________________________________________________________________________________________
@@ -82,7 +82,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:8989/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #_____________________________________________________________________________________________
@@ -125,7 +125,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:7878/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 #_____________________________________________________________________________________________
   # Muximux NZB web front end for Torrent Services
@@ -155,7 +155,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:80/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10  
 
 #_____________________________________________________________________________________________
@@ -198,7 +198,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:8686/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #_____________________________________________________________________________________________
@@ -235,7 +235,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:9117/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #_____________________________________________________________________________________________
@@ -272,7 +272,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:5800/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #_____________________________________________________________________________________________
@@ -303,7 +303,7 @@ services:
     healthcheck:
      test: curl --fail -s http://localhost:80/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 
