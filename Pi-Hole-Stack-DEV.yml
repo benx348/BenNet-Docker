@@ -57,12 +57,12 @@ volumes:
 
   bennetnas_pi-hole_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Pi-Hole-Stack/pi-hole_data"
 #-------------------------------------------------------------  
   bennetnas_pi-hole-dns_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Pi-Hole-Stack/pi-hole-dns_data"

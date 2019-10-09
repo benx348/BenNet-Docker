@@ -24,9 +24,9 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8080" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:8080/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -49,7 +49,7 @@ volumes:
 
   bennetnas_guacd_config:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Guac-Stack/guac_data"
 #-----------------------------------------

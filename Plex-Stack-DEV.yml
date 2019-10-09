@@ -80,11 +80,12 @@ services:
 #---------------------------------------------------------------
     ports:
     - 8011:3579/tcp
+#---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:3579" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:3579/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
 
 
@@ -126,11 +127,10 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:8181" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:8181/ || exit 1
      interval: 1m30s
-     timeout: 30s
+     timeout: 1m
      retries: 10 
-
 #___________________________________________________________________________________________________________________________________________________________________________________________________________
 # Networks
 
@@ -151,58 +151,58 @@ volumes:
 #--------------------------------------------------------------------------------------------- 
   bennetnas_plex_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/plex_data"
 #-----------------------------------------
   bennetnas_plex_trans_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/plex_data_transcode"
 #--------------------------------------------------------------------------------------------- 
 # Ombi Persistant Data Volumes NFS (On BenNetNAS)
   bennetnas_ombi_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/ombi_data"
 #-----------------------------------------
   bennetnas_plex_ombi_share:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/ombi_share"
 #--------------------------------------------------------------------------------------------- 
 # PlexPy Persistant Data Volumes NFS (On BenNetNAS)
   bennetnas_plexpy_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_data"
 #-----------------------------------------
   bennetnas_plexpy_logs:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,ro"
       device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_logs"
 #-----------------------------------------
   bennetnas_plexpy_share:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Plex-Stack/plexpy_shared"
 #---------------------------------------------------------------------------------------------
 # BenNetNAS Media Volumes
   bennetnas_downloads:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Downloads"
 #-----------------------------------------
   bennetnas_media:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Media"
   

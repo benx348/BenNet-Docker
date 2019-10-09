@@ -28,7 +28,7 @@ services:
       placement:
         constraints: [node.platform.os == linux]
 #____________________________________________________________________________________________
-
+# Portainer Server
 
   Portainer_Server:
     image: portainer/portainer
@@ -59,6 +59,6 @@ networks:
 volumes:
   portainer_data:
     driver_opts:
-      type: "nfs"
+      type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/Portainer-Stack/portainer_data"
