@@ -233,7 +233,7 @@ services:
 #---------------------------------------------------------------
 # Health Checks still need work
     healthcheck:
-     test: curl --connect-timeout 15 --show-error --silent --fail --location "http://localhost:9117/UI/Dashboard" > /dev/null || exit 1
+     test: curl --fail -s http://localhost:9117/ || exit 1
      interval: 1m30s
      timeout: 30s
      retries: 10 
