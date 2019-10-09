@@ -1,7 +1,7 @@
 #____________________________________________________________________________________________
 # Poratiner Stack has all the necessary component for Portainer to work on Docker Swarm
 
-version: '3.2'
+version: '3.7'
 
 services:
 #____________________________________________________________________________________________
