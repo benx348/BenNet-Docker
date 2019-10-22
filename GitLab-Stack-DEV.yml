@@ -17,12 +17,12 @@ services:
 #---------------------------------------------------------------
     volumes:  
     - type: volume
-      source: bennetnas_gitlab_data
+      source: bennetnas_gitlab_config
       target: /etc/gitlab
       volume:
         nocopy: true 
     - type: volume
-      source: bennetnas_gitlab_data
+      source: bennetnas_gitlab_log
       target: /var/log/gitlab
       volume:
         nocopy: true
@@ -70,7 +70,7 @@ volumes:
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/DEV/GitLab-Stack/gitlab_config"
 
-  bennetnas_gitlab_log:
+  bennetnas_gitlab_logs:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
