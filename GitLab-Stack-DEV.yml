@@ -11,7 +11,9 @@ services:
 #---------------------------------------------------------------
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.bennettest.com'    
+        external_url 'https://gitlab.bennettest.com' 
+      PUID: 1000
+      GUID: 1000   
 #---------------------------------------------------------------
     volumes:  
     - type: volume
