@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+#____________________________________________________________________________________________
+# GitLab Stack
+
+  # GitLab Software 
+  GitLab:
+    image: gitlab/gitlab-ce:latest
+    hostname: 'gitlab.bennettest.com'
+#---------------------------------------------------------------
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.bennettest.com'    
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_gitlab_data
+      target: /etc/gitlab
+      volume:
+        nocopy: true 
+    - type: volume
+      source: bennetnas_gitlab_data
+      target: /var/log/gitlab
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_gitlab_data
+      target: /var/opt/gitlab
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    networks:
+      - GitLab_Network
+#---------------------------------------------------------------
+    ports:
+      - "22:22"
+      - "8013:80"
+      - "8014:443"
+
+#---------------------------------------------------------------
+# Health Checks still need work
+#    healthcheck:
+#     test: curl --fail -s http://localhost:8443/ || exit 1
+#     interval: 1m30s
+#     timeout: 30s
+#     retries: 10 
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
+# Networks
+
+networks:
+
+  GitLab_Network:
+    driver: overlay
+    attachable: true
+
+#____________________________________________________________________________________________________________________________________________________________________________________________________________
+# Network Volume Mappings (NFS)
+
+volumes:
+
+#GitLab Stack Persistant Data NFS Volumes (On BenNetNAS)
+
+  bennetnas_gitlab_config:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/GitLab-Stack/unifi_config"
+
+  bennetnas_gitlab_log:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/GitLab-Stack/unifi_logs"
+
+  bennetnas_gitlab_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/GitLab-Stack/unifi_data"
+  
