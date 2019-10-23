@@ -22,7 +22,7 @@ services:
       volume:
         nocopy: true 
     - type: volume
-      source: bennetnas_gitlab_log
+      source: bennetnas_gitlab_logs
       target: /var/log/gitlab
       volume:
         nocopy: true
