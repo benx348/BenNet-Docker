@@ -10,8 +10,8 @@ services:
     hostname: 'gitlab.bennettest.com'
 #---------------------------------------------------------------
     environment:
-#      GITLAB_OMNIBUS_CONFIG: |
-#        external_url 'https://192.168.8.150'
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://192.168.8.150'
 #      PUID: 1000
 #      GUID: 1000   
 #---------------------------------------------------------------
