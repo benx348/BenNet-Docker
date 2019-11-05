@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+#____________________________________________________________________________________________
+# Unifi Stack
+
+  # UbiquiTi Controller Software 
+  Unifi_Controller:
+    image: linuxserver/unifi
+#---------------------------------------------------------------
+    environment:
+      PUID: 1000
+      GUID: 1000
+#---------------------------------------------------------------
+    volumes:  
+    - type: volume
+      source: bennetnas_unifi_data
+      target: /config
+      volume:
+        nocopy: true
+#---------------------------------------------------------------
+    networks:
+      - Unifi_Network
+#---------------------------------------------------------------
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+
+#---------------------------------------------------------------
+# Health Checks still need work
+    healthcheck:
+     test: curl --fail -s http://localhost:8443/ || exit 1
+     interval: 1m30s
+     timeout: 30s
+     retries: 10 
+
+#___________________________________________________________________________________________________________________________________________________________________________________________________________
+# Networks
+
+networks:
+
+  Unifi_Network:
+    driver: overlay
+    attachable: true
+
+#____________________________________________________________________________________________________________________________________________________________________________________________________________
+# Network Volume Mappings (NFS)
+
+volumes:
+
+#Unifi Stack Persistant Data NFS Volumes (On BenNetNAS)
+
+  bennetnas_unifi_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Unifi-Stack/unifi_data"
+  
