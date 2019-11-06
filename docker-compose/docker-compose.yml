@@ -15,10 +15,10 @@ services:
   web:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
-    hostname: 'gitlab.example.com'
+    hostname: 'gitlab.bennettest.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.example.com'
+        external_url 'https://gitlab.bennettest.com'
     ports:
       - '80:80'
       - '443:443'
