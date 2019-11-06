@@ -24,12 +24,12 @@ services:
     hostname: 'gitlab.bennettest.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.bennettest.com:8080'
-        nginx['listen_port'] 8080
+        external_url 'http://gitlab.bennettest.com:8016'
+        nginx['listen_port'] 8016
         nginx['listen_http'] = true
         nginx['listen_https'] = false 
     ports:
-      - '8080:80'
+      - '8016:80'
       - '8444:443'
       - '2222:22'
     volumes:
