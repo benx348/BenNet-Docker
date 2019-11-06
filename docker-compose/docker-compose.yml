@@ -12,7 +12,8 @@ services:
     network_mode: bridge
     ports:
     - 9000:9000/tcp
-  web:
+  # Gitlab CE 
+  gitlab:
     image: 'gitlab/gitlab-ce:latest'
     restart: always
     hostname: 'gitlab.bennettest.com'
@@ -20,10 +21,217 @@ services:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.bennettest.com'
     ports:
-      - '80:80'
-      - '443:443'
+      - '8015:80'
+      - '8443:443'
       - '2222:22'
     volumes:
       - './gitlab_config:/etc/gitlab'
       - './gitlab_logs:/var/log/gitlab'
       - './gitlab_data:/var/opt/gitlab'
+
+  # Deluge Torrent Client
+  deluge:
+    container_name: Deluge
+    image: linuxserver/deluge
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./deluge_data:/config:rw
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    network_mode: bridge
+    ports:
+    - 8001:8112/tcp
+    - 8002:58846/tcp
+
+  # Sonarr NZB Manager for TV Shows
+  sonarr:
+    container_name: Sonarr
+    image: linuxserver/sonarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./sonarr_data:/config:rw
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_tv
+      target: /tv
+      volume:
+        nocopy: true
+    network_mode: bridge
+    ports:
+    - 8003:8989/tcp
+    
+  # Sonarr NZB Manager for Movies
+  radarr:
+    container_name: Radarr
+    image: linuxserver/radarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./radarr_data:/config:rw
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_movies
+      target: /movies
+      volume:
+        nocopy: true
+    network_mode: bridge
+    ports:
+    - 8004:7878/tcp
+    
+  # Headphones NZB Manager for Music
+  headphones:
+    container_name: Headphones
+    image: linuxserver/headphones
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./headphones_data:/config:rw
+    - type: volume
+      source: bennetnas_downloads
+      target: /downloads
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_music
+      target: /music
+      volume:
+        nocopy: true
+    network_mode: bridge
+    ports:
+    - 8005:8181/tcp
+    
+  # Jackett Torret Site Proxy Service
+  jackett:
+    container_name: Jackett
+    image: linuxserver/jackett
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./jacket_data:/config:rw
+    - ./jacket_downloads:/downloads:rw
+    network_mode: bridge
+    ports:
+    - 8006:9117/tcp
+    
+  # Guacamole Deamon
+  guacd:
+    container_name: Guacamole_Daemon
+    image: guacamole/guacd
+    networks:
+      guacamole:
+    restart: always
+    volumes:
+    - ./guacd_drive:/drive:rw
+    - ./guacd_record:/record:rw
+    
+  # Guac postgres SQL Database 
+  postgres:
+    container_name: Guacamole_Postgres
+    environment:
+      PGDATA: /var/lib/postgresql/data/guacamole
+      POSTGRES_DB: guacamole_db
+      POSTGRES_PASSWORD: qwe123
+      POSTGRES_USER: guacamole_user
+    image: postgres
+    networks:
+      guacamole:
+    restart: always
+    volumes:
+    - ./guac_sql_init:/docker-entrypoint-initdb.d:ro
+    - ./guac_sql_data:/var/lib/postgresql/data:rw
+
+  # Gaucamole Webserver
+  guacamole:
+    container_name: Guacamole_Webserver
+    depends_on:
+    - guacd
+    - postgres
+    environment:
+      GUACD_HOSTNAME: guacd
+      POSTGRES_DATABASE: guacamole_db
+      POSTGRES_HOSTNAME: postgres
+      POSTGRES_PASSWORD: qwe123
+      POSTGRES_USER: guacamole_user
+    image: guacamole/guacamole
+    links:
+    - guacd
+    networks:
+      guacamole:
+    restart: always
+    ports:
+    - 8007:8080/tcp
+    
+  # UbiquiTi Controller Software 
+  Unifi:
+    container_name: UniFi_Controller
+    image: linuxserver/unifi
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+    volumes:
+    - ./unifi_data:/config:rw
+    network_mode: bridge
+    ports:
+    - 443:443/tcp
+    - 443:443/udp
+    - 3478:3478/udp
+    - 3478:3478/tcp
+    - 8883:8883/tcp
+    - 10001:10001/udp
+    - 8080:8080/tcp
+    - 8081:8081/tcp
+    - 8443:8443/tcp
+    - 8880:8880/tcp
+    - 6789:6789/tcp
+    
+#NFS mapped volumes to bennetnas
+volumes:
+  bennetnas_downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Downloads"
+  bennetnas_tv:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/TV"
+  bennetnas_movies:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Movies"
+  bennetnas_music:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Music"
