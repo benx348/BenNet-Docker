@@ -26,7 +26,7 @@ services:
         external_url 'https://gitlab.bennettest.com'
     ports:
       - '8015:80'
-      - '8443:443'
+      - '8016:443'
       - '2222:22'
     volumes:
       - './gitlab_config:/etc/gitlab'
