@@ -7,11 +7,14 @@ services:
   # GitLab Software 
   GitLab:
     image: gitlab/gitlab-ce:latest
-    hostname: '192.168.8.150'
+    hostname: 'http://gitlab.bennettest.com'
 #---------------------------------------------------------------
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://192.168.8.150'
+        external_url 'http://gitlab.bennettest.com'
+        letsencrypt['enabled'] = false
+        nginx['listen_http'] = true
+        nginx['listen_https'] = false 
       PUID: 1000
       GUID: 1000   
 #---------------------------------------------------------------
@@ -36,7 +39,7 @@ services:
       - GitLab_Network
 #---------------------------------------------------------------
     ports:
-      - "22:22"
+      - "2222:22"
       - "8014:80"
       - "8015:443"
 
