@@ -29,7 +29,7 @@ services:
         nginx['listen_http'] = true
         nginx['listen_https'] = false 
     ports:
-      - '8016:80'
+      - '8016:8016'
       - '8444:443'
       - '2222:22'
     volumes:
