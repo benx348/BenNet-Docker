@@ -7,11 +7,11 @@ services:
   # GitLab Software 
   GitLab:
     image: gitlab/gitlab-ce:latest
-    hostname: 'gitlabswarm.bennettest.com'
+    hostname: 'http://gitlabswarm.bennettest.com'
 #---------------------------------------------------------------
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'gitlabswarm.bennettest.com'
+        external_url 'http://gitlabswarm.bennettest.com'
         letsencrypt['enabled'] = false
         nginx['listen_http'] = true
         nginx['listen_https'] = false 
