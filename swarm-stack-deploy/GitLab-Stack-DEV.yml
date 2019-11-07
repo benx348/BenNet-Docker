@@ -7,7 +7,7 @@ services:
   # GitLab Software 
   GitLab:
     image: gitlab/gitlab-ce:latest
-    hostname: 'http://gitlabswarm.bennettest.com'
+    hostname: 'gitlabswarm.bennettest.com'
 #---------------------------------------------------------------
     environment:
       GITLAB_OMNIBUS_CONFIG: |
