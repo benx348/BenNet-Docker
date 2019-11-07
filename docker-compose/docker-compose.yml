@@ -30,7 +30,7 @@ services:
         nginx['listen_https'] = false 
     ports:
       - '8016:80'
-      - '433:443'
+#      - '433:443'
       - '2222:22'
     volumes:
       - './gitlab_config:/etc/gitlab'
@@ -198,28 +198,28 @@ services:
     - 8007:8080/tcp
     
 #  # UbiquiTi Controller Software 
-#  Unifi:
-#    container_name: UniFi_Controller
-#    image: linuxserver/unifi
-#    restart: always
-#    environment:
-#      PUID: 1000
-#     GUID: 1000
-#    volumes:
-#    - ./unifi_data:/config:rw
-#    network_mode: bridge
-#    ports:
-#    - 443:443/tcp
-#    - 443:443/udp
-#    - 3478:3478/udp
-#    - 3478:3478/tcp
-#    - 8883:8883/tcp
-#    - 10001:10001/udp
-#    - 8080:8080/tcp
-#    - 8081:8081/tcp
-#    - 8443:8443/tcp
-#    - 8880:8880/tcp
-#    - 6789:6789/tcp
+  Unifi:
+    container_name: UniFi_Controller
+    image: linuxserver/unifi
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+    volumes:
+    - ./unifi_data:/config:rw
+    network_mode: bridge
+    ports:
+    - 443:443/tcp
+    - 443:443/udp
+    - 3478:3478/udp
+    - 3478:3478/tcp
+    - 8883:8883/tcp
+    - 10001:10001/udp
+    - 8080:8080/tcp
+    - 8081:8081/tcp
+    - 8443:8443/tcp
+    - 8880:8880/tcp
+    - 6789:6789/tcp
     
 #NFS mapped volumes to bennetnas
 volumes:
