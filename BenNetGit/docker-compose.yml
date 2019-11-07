@@ -1,0 +1,38 @@
+version: '3.2'
+#Network for Guacamole Stack to communicate
+networks:
+  guacamole:
+    driver: bridge
+# containers
+services:
+  # Portainer Docker GUI 
+  portainer:
+    container_name: Portainer
+    image: portainer/portainer
+    restart: always
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./portainer_data:/data:rw
+    network_mode: bridge
+    ports:
+    - 9000:9000/tcp
+  # Gitlab CE 
+  gitlab:
+    container_name: GitLab
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    hostname: 'gitlabswarm.bennettest.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'gitlabswarm.bennettest.com'
+        letsencrypt['enabled'] = false
+        nginx['listen_http'] = true
+        nginx['listen_https'] = false 
+    ports:
+      - '8016:80'
+#      - '433:443'
+      - '2222:22'
+    volumes:
+      - './gitlab_config:/etc/gitlab'
+      - './gitlab_logs:/var/log/gitlab'
+      - './gitlab_data:/var/opt/gitlab'
