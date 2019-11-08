@@ -21,10 +21,10 @@ services:
     container_name: GitLab
     image: 'gitlab/gitlab-ce:latest'
     restart: always
-    hostname: 'gitlabswarm.bennettest.com'
+    hostname: 'gitlab.bennet.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'gitlabswarm.bennettest.com'
+        external_url 'http://gitlab.bennet.com'
         letsencrypt['enabled'] = false
         nginx['listen_http'] = true
         nginx['listen_https'] = false 
