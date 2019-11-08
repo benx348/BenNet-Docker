@@ -12,7 +12,11 @@ services:
     restart: always
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-    - ./portainer_data:/data:rw
+    - type: volume
+      source: bennetnas_portainer_data
+      target: /data
+      volume:
+        nocopy: true
     network_mode: bridge
     ports:
     - 9000:9000/tcp
@@ -33,6 +37,41 @@ services:
 #      - '433:443'
       - '2222:22'
     volumes:
-      - './gitlab_config:/etc/gitlab'
-      - './gitlab_logs:/var/log/gitlab'
-      - './gitlab_data:/var/opt/gitlab'
+    - type: volume
+      source: bennetnas_gitlab_config
+      target: /etc/gitlab
+      volume:
+        nocopy: true 
+    - type: volume
+      source: bennetnas_gitlab_logs
+      target: /var/log/gitlab
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_gitlab_data
+      target: /var/opt/gitlab
+      volume:
+        nocopy: true
+
+#NFS mapped volumes to bennetnas
+volumes:
+  bennetnas_gitlab_config:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Gitlab/gitlab_config"
+  bennetnas_gitlab_logs:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Gitlab/gitlab_logs"
+  bennetnas_gitlab_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Gitlab/gitlab_data"
+  bennetnas_portainer_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Portainer/portainer_data"
