@@ -24,7 +24,7 @@ services:
     hostname: 'gitlab.bennet.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.bennet.com'
+        external_url 'https://gitlab.bennet.com'
 #        letsencrypt['enabled'] = true
 #        nginx['listen_http'] = true
 #        nginx['listen_https'] = true 
