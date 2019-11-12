@@ -46,7 +46,7 @@ services:
     ports:
       - "8201:8200"
     volumes:
-      - ./vault/:/vault/config
+      - ./vault_data/:/vault/config
     environment:
       VAULT_ADDR: http://192.168.8.140:8200
       VAULT_DEV_ROOT_TOKEN_ID: root
@@ -54,7 +54,7 @@ services:
     links:
       - postgres
       - rabbit
-    command: ["/vault/config/config.sh"]
+#    command: ["/vault/config/config.sh"]
     healthcheck:
       test: ["CMD", "vault", "status"]
       interval: 2s
