@@ -14,7 +14,7 @@ services:
     ports:
     - 9000:9000/tcp
   postgres:
-    container_name: postgres
+    container_name: Vault_Postgres
     image: postgres:9.6
     ports:
       - "5433:5432"
@@ -29,7 +29,7 @@ services:
       retries: 30
 
   rabbit:
-    container_name: rabbit
+    container_name: Vault_Rabbit
     image: rabbitmq:3-management
     ports:
       - "5673:5672"
@@ -41,14 +41,14 @@ services:
       retries: 30
 
   vault:
-    container_name: vault
+    container_name: Vault
     image: vault
     ports:
       - "8201:8200"
     volumes:
       - ./vault/:/vault/config
     environment:
-      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_ADDR: http://192.168.8.140:8200
       VAULT_DEV_ROOT_TOKEN_ID: root
       SKIP_SETCAP: 1
     links:
