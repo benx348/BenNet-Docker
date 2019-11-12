@@ -25,12 +25,12 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.bennet.com'
-#        letsencrypt['enabled'] = false
+#        letsencrypt['enabled'] = true
 #        nginx['listen_http'] = true
-#        nginx['listen_https'] = false 
+#        nginx['listen_https'] = true 
     ports:
       - '80:80'
-      - '433:443'
+      - '443:443'
       - '2222:22'
     volumes:
     - type: volume
