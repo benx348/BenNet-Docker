@@ -31,7 +31,7 @@ services:
     ports:
       - '80:80'
 #      - '443:443'
-#      - '2222:22'
+      - '2222:22'
     volumes:
     - /nfs/gitlab/gitlab_config:/etc/gitlab
     - /nfs/gitlab/gitlab_logs:/var/log/gitlab
