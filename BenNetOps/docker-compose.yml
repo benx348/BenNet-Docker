@@ -24,14 +24,14 @@ services:
     hostname: 'gitlab.bennet.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.bennet.com'
-#        letsencrypt['enabled'] = true
-#        nginx['listen_http'] = true
-#        nginx['listen_https'] = true 
+        external_url 'http://gitlab.bennet.com'
+        nginx['listen_http'] = true
+#        letsencrypt['enabled'] = false
+#        nginx['listen_https'] = false 
     ports:
       - '80:80'
-      - '443:443'
-      - '2222:22'
+#      - '443:443'
+#      - '2222:22'
     volumes:
     - /nfs/gitlab/gitlab_config:/etc/gitlab
     - /nfs/gitlab/gitlab_logs:/var/log/gitlab
