@@ -37,6 +37,22 @@ services:
     - /nfs/gitlab/gitlab_logs:/var/log/gitlab
     - /nfs/gitlab/gitlab_data:/var/opt/gitlab
 
+  # Jenkins
+  jenkins:
+    container_name: Jenkins
+    image: 'jenkins/jenkins:lts'
+    restart: always
+    ports:
+      - '8081:8080'
+      - '5000:5000'
+    volumes:
+    - type: volume
+      source: bennetnas_jenkins_data
+      target: /var/jenkins_home
+      volume:
+        nocopy: true
+
+
 
 #NFS mapped volumes to bennetnas
 volumes:
@@ -45,3 +61,9 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Portainer/portainer_data"
+
+  bennetnas_jenkins_data:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Jenkins/jenkins_data"
