@@ -88,7 +88,7 @@ volumes:
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Jenkins/jenkin_data"
 
-  bennetnas_Unifi_data:
+  bennetnas_unifi_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
