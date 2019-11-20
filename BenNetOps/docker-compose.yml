@@ -28,8 +28,7 @@ services:
 #        letsencrypt['enabled'] = false
 #        nginx['listen_https'] = false 
     ports:
-      - '80:80'
-#      - '443:443'
+      - '8002:80'
       - '2222:22'
     volumes:
     - /nfs/gitlab/gitlab_config:/etc/gitlab
@@ -42,17 +41,12 @@ services:
     image: 'jenkins/jenkins:lts'
     restart: always
     ports:
-      - '8002:8080'
+      - '8003:8080'
       - '5000:5000'
     volumes:
     - type: volume
       source: bennetnas_jenkins_data
       target: /var/jenkins_home
-    healthcheck:
-     test: curl --fail -s http://localhost:8080/ || exit 1
-     interval: 1m30s
-     timeout: 30s
-     retries: 10 
 
   # UbiquiTi Controller Software 
   Unifi:
@@ -68,15 +62,12 @@ services:
       target: /config
     network_mode: bridge
     ports:
-    - 443:443/tcp
-    - 443:443/udp
     - 3478:3478/udp
-    - 3478:3478/tcp
-    - 8883:8883/tcp
     - 10001:10001/udp
     - 8080:8080/tcp
     - 8081:8081/tcp
     - 8443:8443/tcp
+    - 8843:8843/tcp
     - 8880:8880/tcp
     - 6789:6789/tcp
     healthcheck:
@@ -84,6 +75,32 @@ services:
      interval: 1m30s
      timeout: 30s
      retries: 10 
+
+  # Pi Hole
+  Pi-Hole:
+    container_name: Pi-Hole
+    image: 'pihole/pihole'
+    restart: always
+    environment:
+      TZ: EST
+      WEBPASSWORD: "qwe123"  ## this is a temp password and need to be changed from the console after boot. change with "pihole -a -p"
+    ports:
+    - 53:53/tcp
+    - 53:53/udp
+    - 67:67/udp
+    - 80:80/tcp
+    - 443:443/tcp
+    volumes:  
+    - type: volume
+      source: bennetnas_pi-hole-dns_data
+      target: /etc/dnsmasq.d
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_pi-hole_data
+      target: /etc/pihole
+      volume:
+        nocopy: true
 
 #NFS mapped volumes to bennetnas
 volumes:
@@ -104,3 +121,15 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Unifi/unifi_data"
+
+  bennetnas_pi-hole_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/DEV/Pi-Hole-Stack/pi-hole_data"
+#-------------------------------------------------------------  
+  bennetnas_pi-hole-dns_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/Pi-Hole/pi-hole-dns_data"
