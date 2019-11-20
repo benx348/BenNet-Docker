@@ -28,7 +28,7 @@ services:
 #        letsencrypt['enabled'] = false
 #        nginx['listen_https'] = false 
     ports:
-      - '8002:80'
+      - '8001:80'
       - '2222:22'
     volumes:
     - /nfs/gitlab/gitlab_config:/etc/gitlab
