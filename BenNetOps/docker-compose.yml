@@ -126,7 +126,7 @@ volumes:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/DEV/BenNetOps/Pi-Hole/pi-hole_data"
+      device: ":/volume1/Docker/PROD/BenNetOps/Pi-Hole/pi-hole_data"
 #-------------------------------------------------------------  
   bennetnas_pi-hole-dns_data:
     driver_opts:
