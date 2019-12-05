@@ -30,10 +30,23 @@ services:
     ports:
       - '8001:80'
       - '2222:22'
-    volumes:
-    - /nfs/gitlab/gitlab_config:/etc/gitlab
-    - /nfs/gitlab/gitlab_logs:/var/log/gitlab
-    - /nfs/gitlab/gitlab_data:/var/opt/gitlab
+    volumes:  
+    - type: volume
+      source: bennetnas_gitlab_config
+      target: /etc/gitlab
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_gitlab_logs
+      target: /var/log/gitlab
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_gitlab_data
+      target: /var/opt/gitlab
+      volume:
+        nocopy: true
+
 
   # Jenkins
   jenkins:
@@ -109,27 +122,45 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Portainer/portainer_data"
-
+#------------------------------------------------------------- 
   bennetnas_jenkins_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Jenkins/jenkin_data"
-
+#------------------------------------------------------------- 
   bennetnas_unifi_data:
     driver_opts:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Unifi/unifi_data"
-
+#-------------------------------------------------------------
   bennetnas_pi-hole_data:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Pi-Hole/pi-hole_data"
-#-------------------------------------------------------------  
+  
   bennetnas_pi-hole-dns_data:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/Pi-Hole/pi-hole-dns_data"
+#-------------------------------------------------------------
+  bennetnas_gitlab_config:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/GitLab/gitlab_config"
+  
+  bennetnas_gitlab_logs:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/GitLab/gitlab_logs"
+
+  bennetnas_gitlab_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/GitLab/gitlab_data"
