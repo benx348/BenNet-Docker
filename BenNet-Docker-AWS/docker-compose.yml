@@ -1,0 +1,34 @@
+version: '3.2'
+# containers
+services:
+
+  # Portainer Docker GUI 
+  portainer:
+    container_name: Portainer
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock    
+    restart: always
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./portainer_data:/data
+    network_mode: bridge
+    ports:
+    - 9000:9000/tcp
+
+  # Deluge Torrent Client
+  deluge:
+    container_name: Deluge
+    image: linuxserver/deluge
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./deluge_data:/config:rw
+    - ./deluge_downloads:/downloads
+
+    network_mode: bridge
+    ports:
+    - 8001:8112/tcp
+    - 8002:58846/tcp
