@@ -32,3 +32,20 @@ services:
     ports:
     - 8001:8112/tcp
     - 8002:58846/tcp
+
+  # Sonarr NZB Manager for TV Shows
+  sonarr:
+    container_name: Sonarr
+    image: linuxserver/sonarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./sonarr_data:/config:rw
+    - ./sonarr_downloads:/downloads:rw
+    - ./sonarr_tv:/tv:rw
+    network_mode: bridge
+    ports:
+    - 8003:8989/tcp
