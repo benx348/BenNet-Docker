@@ -1,0 +1,75 @@
+version: '3.2'
+# containers
+services:
+
+  # Portainer Docker GUI 
+  portainer:
+    container_name: Portainer
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock    
+    restart: always
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./portainer_data:/data
+    network_mode: bridge
+    ports:
+    - 9000:9000/tcp
+
+  # Deluge Torrent Client
+  deluge:
+    container_name: Deluge
+    image: linuxserver/deluge
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./deluge_data:/config:rw
+    - ./deluge_downloads:/downloads
+
+    network_mode: bridge
+    ports:
+    - 8001:8112/tcp
+    - 8002:58846/tcp
+
+  # Sonarr NZB Manager for TV Shows
+  sonarr:
+    container_name: Sonarr
+    image: linuxserver/sonarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./sonarr_data:/config:rw
+    - ./sonarr_downloads:/downloads:rw
+    - ./sonarr_tv:/tv:rw
+    network_mode: bridge
+    ports:
+    - 8003:8989/tcp
+
+# UbiquiTi Controller Software 
+  Unifi:
+    container_name: UniFi_Controller
+    image: linuxserver/unifi
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+    volumes:
+    - ./unifi_data:/config:rw
+    network_mode: bridge
+    ports:
+    - 443:443/tcp
+    - 443:443/udp
+    - 3478:3478/udp
+    - 3478:3478/tcp
+    - 8883:8883/tcp
+    - 10001:10001/udp
+    - 8080:8080/tcp
+    - 8081:8081/tcp
+    - 8443:8443/tcp
+    - 8880:8880/tcp
+    - 6789:6789/tcp
