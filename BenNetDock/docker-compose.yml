@@ -205,6 +205,7 @@ services:
 ##########################################################################################
 # Plex Stack
   Plex_Server: 
+    container_name: Plex
     image: plexinc/pms-docker
     restart: always
     environment:
@@ -240,6 +241,7 @@ services:
 ################################################## 
 # Ombi Media Requests 
   Ombi_Server:
+    container_name: Ombi
     image: linuxserver/ombi
     environment:
       PUID: 1000
@@ -255,6 +257,7 @@ services:
 ################################################## 
 # PlexPy Media Requests 
   PlexPy_Server:
+    container_name: PlexPy
     image: linuxserver/tautulli
     environment:
       PUID: 1000
