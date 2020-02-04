@@ -266,7 +266,7 @@ services:
     - ./plexpy_logs:/logs:rw
     - ./plexpy_shared:/shared:rw
   networks:
-    - Plex_Network
+    plex:
   ports:
   - 8012:8181/tcp
 
