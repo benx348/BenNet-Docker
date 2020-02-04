@@ -268,7 +268,18 @@ services:
       plex:
     ports:
     - 8012:8181/tcp
-##########################################################################################
+###########################################################################################################################
+#Network for Guacamole Stack to communicate
+networks:
+  tor:
+    driver: bridge
+  unifi:
+    driver: bridge
+  guac:
+    driver: bridge
+  plex:
+    driver: bridge
+###########################################################################################################################
 #NFS mapped volumes to bennetnas
 volumes:
   bennetnas_downloads:
