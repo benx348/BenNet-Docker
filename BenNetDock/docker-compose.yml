@@ -198,7 +198,7 @@ services:
     links:
     - guacd
     networks:
-      guacamole:
+      guac:
     restart: always
     ports:
     - 8007:8080/tcp
