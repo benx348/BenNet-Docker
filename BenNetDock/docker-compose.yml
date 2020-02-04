@@ -160,7 +160,7 @@ services:
     container_name: Guacamole_Daemon
     image: guacamole/guacd
     networks:
-      guacamole:
+      guac:
     restart: always
     volumes:
     - ./guacd_drive:/drive:rw
@@ -176,7 +176,7 @@ services:
       POSTGRES_USER: guacamole_user
     image: postgres
     networks:
-      guacamole:
+      guac:
     restart: always
     volumes:
     - ./guac_sql_init:/docker-entrypoint-initdb.d:ro
