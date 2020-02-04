@@ -204,8 +204,7 @@ services:
     - 8007:8080/tcp
 ##########################################################################################
 # Plex Stack
-  plex:
-    container_name: Plex 
+  Plex_Server: 
     image: plexinc/pms-docker
     restart: always
     environment:
@@ -265,10 +264,10 @@ services:
     - ./plexpy_config:/config:rw
     - ./plexpy_logs:/logs:rw
     - ./plexpy_shared:/shared:rw
-  networks:
-    plex:
-  ports:
-  - 8012:8181/tcp
+    networks:
+      plex:
+    ports:
+    - 8012:8181/tcp
 ##########################################################################################
 #NFS mapped volumes to bennetnas
 volumes:
