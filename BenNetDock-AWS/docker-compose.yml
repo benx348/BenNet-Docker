@@ -1,0 +1,280 @@
+version: '3.2'
+# containers
+services:
+##########################################################################################
+  # Portainer Docker GUI 
+  portainer:
+    container_name: Portainer
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock    
+    restart: always
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./portainer_data:/data
+    network_mode: bridge
+    ports:
+    - 9000:9000/tcp
+##########################################################################################
+# Torrent Stack
+  # Deluge Torrent Client
+  deluge:
+    container_name: Deluge
+    image: linuxserver/deluge
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./deluge_data:/config:rw
+    - ./deluge_downloads:/downloads
+    networks:
+      tor:
+    ports:
+    - 8001:8112/tcp
+    - 8002:58846/tcp
+##################################################
+  # Sonarr NZB Manager for TV Shows
+  sonarr:
+    container_name: Sonarr
+    image: linuxserver/sonarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./sonarr_data:/config:rw
+    - ./bennet_downloads:/downloads:rw
+    - ./bennet_media/tv:/tv:rw
+    networks:
+      tor:
+    ports:
+    - 8003:8989/tcp
+##################################################
+  # Radarr NZB Manager for Movies
+  radarr:
+    container_name: Radarr
+    image: linuxserver/radarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./radarr_data:/config:rw
+    - ./bennet_downloads:/downloads:rw
+    - ./bennet_media/movies:/movies:rw
+    networks:
+      tor:
+    ports:
+    - 8004:7878/tcp
+##################################################
+  # Lidarr NZB Manager for Music
+  Lidarr:
+    container_name: Lidarr
+    image: linuxserver/lidarr
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./lidarr_data:/config:rw
+    - ./bennet_downloads:/downloads:rw
+    - ./bennet_media/music:/music:rw
+    networks:
+      tor:
+    ports:
+    - 8005:8686/tcp
+##################################################
+  # Jackett Torret Site Proxy Service
+  jackett:
+    container_name: Jackett
+    image: linuxserver/jackett
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ: EST
+    volumes:
+    - ./jacket_data:/config:rw
+    - ./jacket_downloads:/downloads:rw
+    networks:
+      tor:
+    ports:
+    - 8006:9117/tcp
+##########################################################################################
+# UbiquiTi Controller Software 
+  Unifi:
+    container_name: UniFi_Controller
+    image: linuxserver/unifi
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+    volumes:
+    - ./unifi_data:/config:rw
+    networks:
+      unifi:
+    ports:
+    - 443:443/tcp
+    - 443:443/udp
+    - 3478:3478/udp
+    - 3478:3478/tcp
+    - 8883:8883/tcp
+    - 10001:10001/udp
+    - 8080:8080/tcp
+    - 8081:8081/tcp
+    - 8443:8443/tcp
+    - 8880:8880/tcp
+    - 6789:6789/tcp
+##########################################################################################
+# Guacamole RDP Stack
+  # Guacamole Deamon
+  guacd:
+    container_name: Guacamole_Daemon
+    image: guacamole/guacd
+    networks:
+      guac:
+    restart: always
+    volumes:
+    - ./guacd_drive:/drive:rw
+    - ./guacd_record:/record:rw
+##################################################    
+  # Guac postgres SQL Database 
+  postgres:
+    container_name: Guacamole_Postgres
+    environment:
+      PGDATA: /var/lib/postgresql/data/guacamole
+      POSTGRES_DB: guacamole_db
+      POSTGRES_PASSWORD: qwer1234
+      POSTGRES_USER: guacamole_user
+    image: postgres
+    networks:
+      guac:
+    restart: always
+    volumes:
+    - ./guac_sql_init:/docker-entrypoint-initdb.d:ro
+    - ./guac_sql_data:/var/lib/postgresql/data:rw
+################################################## 
+  # Gaucamole Webserver
+  guacamole:
+    container_name: Guacamole_Webserver
+    depends_on:
+    - guacd
+    - postgres
+    environment:
+      GUACD_HOSTNAME: guacd
+      POSTGRES_DATABASE: guacamole_db
+      POSTGRES_HOSTNAME: postgres
+      POSTGRES_PASSWORD: qwer1234
+      POSTGRES_USER: guacamole_user
+    image: guacamole/guacamole
+    links:
+    - guacd
+    networks:
+      guac:
+    restart: always
+    ports:
+    - 8007:8080/tcp
+##########################################################################################
+# Plex Stack
+  Plex_Server: 
+    container_name: Plex
+    image: plexinc/pms-docker
+    restart: always
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+      ADVERTISE_IP: http://192.168.9.140:32400/
+    volumes:
+    - ./plex_data:/config:rw
+    - ./plex_transcode:/transcode:rw
+    - ./bennet_downloads:/downloads:rw
+    - ./bennet_media:/media:rw
+    networks:
+      plex:
+    ports:
+    - 32400:32400/tcp
+    - 3005:3005/tcp
+    - 8324:8324/tcp
+    - 32469:32469/tcp
+    - 1900:1900/udp
+    - 32410:32410/udp
+    - 32412:32412/udp
+    - 32413:32413/udp
+    - 32414:32414/udp
+################################################## 
+# Ombi Media Requests 
+  Ombi_Server:
+    container_name: Ombi
+    image: linuxserver/ombi
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+    volumes:
+      - ./ombi_data:/config:rw
+      - ./ombi_shared:/shared:rw
+    networks:
+      plex:
+    ports:
+    - 8011:3579/tcp
+################################################## 
+# PlexPy Media Requests 
+  PlexPy_Server:
+    container_name: PlexPy
+    image: linuxserver/tautulli
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
+    volumes:  
+    - ./plexpy_config:/config:rw
+    - ./plexpy_logs:/logs:rw
+    - ./plexpy_shared:/shared:rw
+    networks:
+      plex:
+    ports:
+    - 8012:8181/tcp
+###########################################################################################################################
+#Network for Guacamole Stack to communicate
+networks:
+  tor:
+    driver: bridge
+  unifi:
+    driver: bridge
+  guac:
+    driver: bridge
+  plex:
+    driver: bridge
+###########################################################################################################################
+#NFS mapped volumes to bennetnas
+volumes:
+  bennetnas_downloads:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Downloads"
+  bennetnas_tv:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/TV"
+  bennetnas_movies:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Movies"
+  bennetnas_music:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media/Music"
+  bennetnas_media:
+    driver_opts:
+      type: "nfs"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Media"
