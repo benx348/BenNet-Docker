@@ -9,8 +9,12 @@ services:
     command: -H unix:///var/run/docker.sock    
     restart: always
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - type: volume
+        source: bennetnas_portainer_data
+        target: /data
+        volume:
+          nocopy: true
     network_mode: bridge
     ports:
     - 9000:9000/tcp
@@ -26,8 +30,16 @@ services:
       GUID: 1000
       TZ: EST
     volumes:
-    - ./deluge_data:/config:rw
-    - ./deluge_downloads:/downloads
+      - type: volume
+        source: bennetnas_deluge_data
+        target: /config
+        volume:
+          nocopy: true
+      - type: volume
+        source: bennetnas_downloads
+        target: /downloads
+        volume:
+          nocopy: true
     networks:
       tor:
     ports:
@@ -44,7 +56,11 @@ services:
       GUID: 1000
       TZ: EST
     volumes:
-    - ./sonarr_data:/config:rw
+    - type: volume
+      source: bennetnas_sonarr_data
+      target: /config
+      volume:
+        nocopy: true
     - type: volume
       source: bennetnas_downloads
       target: /downloads
@@ -70,7 +86,11 @@ services:
       GUID: 1000
       TZ: EST
     volumes:
-    - ./radarr_data:/config:rw
+    - type: volume
+      source: bennetnas_radarr_data
+      target: /config
+      volume:
+        nocopy: true
     - type: volume
       source: bennetnas_downloads
       target: /downloads
@@ -96,7 +116,11 @@ services:
       GUID: 1000
       TZ: EST
     volumes:
-    - ./lidarr_data:/config:rw
+    - type: volume
+      source: bennetnas_lidarr_data
+      target: /config
+      volume:
+        nocopy: true
     - type: volume
       source: bennetnas_downloads
       target: /downloads
@@ -122,8 +146,16 @@ services:
       GUID: 1000
       TZ: EST
     volumes:
-    - ./jacket_data:/config:rw
-    - ./jacket_downloads:/downloads:rw
+    - type: volume
+      source: bennetnas_jacket_data
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_jacket_downloads
+      target: /config
+      volume:
+        nocopy: true
     networks:
       tor:
     ports:
@@ -138,7 +170,11 @@ services:
       PUID: 1000
       GUID: 1000
     volumes:
-    - ./unifi_data:/config:rw
+    - type: volume
+      source: bennetnas_unifi_data
+      target: /config
+      volume:
+        nocopy: true
     networks:
       unifi:
     ports:
@@ -165,6 +201,16 @@ services:
     volumes:
     - ./guacd_drive:/drive:rw
     - ./guacd_record:/record:rw
+    - type: volume
+      source: bennetnas_guacd_drive
+      target: /drive
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_guacd_record
+      target: /record
+      volume:
+        nocopy: true
 ##################################################    
   # Guac postgres SQL Database 
   postgres:
@@ -179,8 +225,16 @@ services:
       guac:
     restart: always
     volumes:
-    - ./guac_sql_init:/docker-entrypoint-initdb.d:ro
-    - ./guac_sql_data:/var/lib/postgresql/data:rw
+    - type: volume
+      source: bennetnas_guac_sql_init
+      target: /docker-entrypoint-initdb.d
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_guac_sql_data
+      target: /var/lib/postgresql/data
+      volume:
+        nocopy: true
 ################################################## 
   # Gaucamole Webserver
   guacamole:
@@ -214,8 +268,16 @@ services:
       TZ:   EST
       ADVERTISE_IP: http://192.168.9.140:32400/
     volumes:
-    - ./plex_data:/config:rw
-    - ./plex_transcode:/transcode:rw
+    - type: volume
+      source: bennetnas_plex_data
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_plex_transcode
+      target: /transcode
+      volume:
+        nocopy: true
     - type: volume
       source: bennetnas_downloads
       target: /downloads
@@ -248,8 +310,16 @@ services:
       GUID: 1000
       TZ:   EST
     volumes:
-      - ./ombi_data:/config:rw
-      - ./ombi_shared:/shared:rw
+      - type: volume
+        source: bennetnas_ombi_data
+        target: /config
+        volume:
+          nocopy: true
+      - type: volume
+        source: bennetnas_ombi_shared
+        target: /shared
+        volume:
+          nocopy: true
     networks:
       plex:
     ports:
@@ -264,9 +334,21 @@ services:
       GUID: 1000
       TZ:   EST
     volumes:  
-    - ./plexpy_config:/config:rw
-    - ./plexpy_logs:/logs:rw
-    - ./plexpy_shared:/shared:rw
+    - type: volume
+      source: bennetnas_plexpy_data
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_plexypy_logs
+      target: /logs
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_plexpy_shared
+      target: /shared
+      volume:
+        nocopy: true
     networks:
       plex:
     ports:
@@ -285,6 +367,9 @@ networks:
 ###########################################################################################################################
 #NFS mapped volumes to bennetnas
 volumes:
+
+#################################################
+# BenNetNas Media 
   bennetnas_downloads:
     driver_opts:
       type: "nfs"
@@ -310,3 +395,115 @@ volumes:
       type: "nfs"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Media"
+
+#################################################
+# BenNetNas Docker persistant data Volumes
+
+###############################
+  bennetnas_portainer_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Portainer/portainer_data"
+###############################
+  bennetnas_deluge_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Deluge/deluge_data"
+  bennetnas_sonarr_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Sonarr/sonarr_data"
+  bennetnas_radarr_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Radarr/radarr_data"
+  bennetnas_jacket_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Jacket/jacket_data"
+  bennetnas_jacket_downloads:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Jacket/downloads"
+  bennetnas_lidarr_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Lidarr/lidarr_data"
+###############################
+  bennetnas_unifi_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Unifi/unifi_data"
+###############################
+
+  bennetnas_guacd_drive:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Guacamole/guacd_drive"
+  bennetnas_guacd_record:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Guacamole/guacd_record"
+
+  bennetnas_guac_sql_init:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Guacamole/guac_sql_init"
+  bennetnas_guac_sql_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Guacamole/guac_sql_data"
+
+###############################
+
+  bennetnas_plex_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/plex_data"
+  bennetnas_plex_transcode:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/plex_transcode"
+
+  bennetnas_ombi_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Ombi/ombi_data"
+  bennetnas_ombi_shared:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/Ombi/ombi_shared"
+
+  bennetnas_plexpy_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_data"
+  bennetnas_plexpy_logs:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_logs"
+  bennetnas_plexpy_shared:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_shared"
+
+
