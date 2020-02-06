@@ -311,7 +311,7 @@ services:
       volume:
         nocopy: true
     - type: volume
-      source: bennetnas_plexypy_logs
+      source: bennetnas_plexpy_logs
       target: /logs
       volume:
         nocopy: true
