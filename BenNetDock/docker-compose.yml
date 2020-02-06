@@ -161,35 +161,6 @@ services:
     ports:
     - 8006:9117/tcp
 ##########################################################################################
-# UbiquiTi Controller Software 
-  Unifi:
-    container_name: UniFi_Controller
-    image: linuxserver/unifi
-    restart: always
-    environment:
-      PUID: 1000
-      GUID: 1000
-    volumes:
-    - type: volume
-      source: bennetnas_unifi_data
-      target: /config
-      volume:
-        nocopy: true
-    networks:
-      unifi:
-    ports:
-    - 443:443/tcp
-    - 443:443/udp
-    - 3478:3478/udp
-    - 3478:3478/tcp
-    - 8883:8883/tcp
-    - 10001:10001/udp
-    - 8080:8080/tcp
-    - 8081:8081/tcp
-    - 8443:8443/tcp
-    - 8880:8880/tcp
-    - 6789:6789/tcp
-##########################################################################################
 # Guacamole RDP Stack
   # Guacamole Deamon
   guacd:
@@ -358,8 +329,6 @@ services:
 networks:
   tor:
     driver: bridge
-  unifi:
-    driver: bridge
   guac:
     driver: bridge
   plex:
@@ -437,13 +406,6 @@ volumes:
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetDock/Torrent/Lidarr/lidarr_data"
 ###############################
-  bennetnas_unifi_data:
-    driver_opts:
-      type: "nfs4"
-      o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/Unifi/unifi_data"
-###############################
-
   bennetnas_guacd_drive:
     driver_opts:
       type: "nfs4"
@@ -465,9 +427,7 @@ volumes:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetDock/Guacamole/guac_sql_data"
-
 ###############################
-
   bennetnas_plex_data:
     driver_opts:
       type: "nfs4"
