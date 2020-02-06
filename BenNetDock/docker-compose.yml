@@ -443,27 +443,27 @@ volumes:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/Ombi/ombi_data"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/ombi_data"
   bennetnas_ombi_shared:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/Ombi/ombi_shared"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/ombi_shared"
 
   bennetnas_plexpy_data:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_data"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/plexpy_data"
   bennetnas_plexpy_logs:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_logs"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/plexpy_logs"
   bennetnas_plexpy_shared:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/PlexPy/plexpy_shared"
+      device: ":/volume1/Docker/PROD/BenNetDock/Plex/plexpy_shared"
 
 
