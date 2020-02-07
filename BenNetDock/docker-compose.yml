@@ -276,6 +276,7 @@ services:
   Ombi_Server:
     container_name: Ombi
     image: linuxserver/ombi
+    restart: always
     environment:
       PUID: 1000
       GUID: 1000
@@ -300,6 +301,7 @@ services:
   PlexPy_Server:
     container_name: PlexPy
     image: linuxserver/tautulli
+    restart: always
     environment:
       PUID: 1000
       GUID: 1000
