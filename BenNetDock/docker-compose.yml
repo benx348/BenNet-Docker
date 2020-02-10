@@ -303,8 +303,8 @@ services:
     image: linuxserver/tautulli
     restart: always
     environment:
-      PUID: 1000
-      GUID: 1000
+      PUID: 0
+      GUID: 0
       TZ:   EST
     volumes:  
     - type: volume
