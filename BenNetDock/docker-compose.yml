@@ -302,10 +302,10 @@ services:
     container_name: PlexPy
     image: linuxserver/tautulli
     restart: always
-#    environment:
-#      PUID: 1000
-#      GUID: 1000
-#      TZ:   EST
+    environment:
+      PUID: 1000
+      GUID: 1000
+      TZ:   EST
     volumes:  
     - type: volume
       source: bennetnas_plexpy_data
