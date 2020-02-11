@@ -305,24 +305,21 @@ services:
       GUID: 0
       TZ:   EST
     volumes:  
-    - ./plexpy_config:/config:rw
-    - ./plexpy_logs:/logs:rw
-    - ./plexpy_shared:/shared:rw
-#    - type: volume
-#      source: bennetnas_plexpy_data
-#      target: /config
-#      volume:
-#        nocopy: true
-#    - type: volume
-#      source: bennetnas_plexpy_logs
-#      target: /logs
-#      volume:
-#        nocopy: true
-#    - type: volume
-#      source: bennetnas_plexpy_shared
-#      target: /shared
-#      volume:
-#        nocopy: true
+    - type: volume
+      source: bennetnas_plexpy_data
+      target: /config
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_plexpy_logs
+      target: /logs
+      volume:
+        nocopy: true
+    - type: volume
+      source: bennetnas_plexpy_shared
+      target: /shared
+      volume:
+        nocopy: true
     networks:
       plex:
     ports:
