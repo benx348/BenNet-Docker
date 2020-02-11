@@ -305,9 +305,9 @@ services:
       GUID: 0
       TZ:   EST
     volumes:  
-    - ./plexpy-config:config
-    - ./plexpy-logs:logs  
-    - ./plexpy-shared:shared
+    - ./plexpy_config:/config:rw
+    - ./plexpy_logs:/logs:rw
+    - ./plexpy_shared:/shared:rw
 #    - type: volume
 #      source: bennetnas_plexpy_data
 #      target: /config
