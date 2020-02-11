@@ -170,8 +170,6 @@ services:
       guac:
     restart: always
     volumes:
-    - ./guacd_drive:/drive:rw
-    - ./guacd_record:/record:rw
     - type: volume
       source: bennetnas_guacd_drive
       target: /drive
@@ -303,25 +301,28 @@ services:
     image: linuxserver/tautulli
     restart: always
     environment:
-      PUID: 0
+      PUID: 1000
       GUID: 0
       TZ:   EST
     volumes:  
-    - type: volume
-      source: bennetnas_plexpy_data
-      target: /config
-      volume:
-        nocopy: true
-    - type: volume
-      source: bennetnas_plexpy_logs
-      target: /logs
-      volume:
-        nocopy: true
-    - type: volume
-      source: bennetnas_plexpy_shared
-      target: /shared
-      volume:
-        nocopy: true
+    - ./plexpy-config:config
+    - ./plexpy-logs:logs  
+    - ./plexpy-shared:shared
+#    - type: volume
+#      source: bennetnas_plexpy_data
+#      target: /config
+#      volume:
+#        nocopy: true
+#    - type: volume
+#      source: bennetnas_plexpy_logs
+#      target: /logs
+#      volume:
+#        nocopy: true
+#    - type: volume
+#      source: bennetnas_plexpy_shared
+#      target: /shared
+#      volume:
+#        nocopy: true
     networks:
       plex:
     ports:
