@@ -235,7 +235,7 @@ services:
       PUID: 1000
       GUID: 1000
       TZ:   EST
-      ADVERTISE_IP: http://192.168.9.140:32400/
+#      ADVERTISE_IP: http://192.168.9.140:32400/
     volumes:
     - type: volume
       source: bennetnas_plex_data
