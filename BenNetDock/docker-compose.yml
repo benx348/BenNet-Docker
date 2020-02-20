@@ -229,34 +229,34 @@ services:
 # Plex Stack
   Plex_Server: 
     container_name: Plex
-    image: plexinc/pms-docker
+    image: linuxserver/plex
     restart: always
     environment:
       PUID: 1000
       GUID: 1000
-      TZ:   EST
-      HOSTNAME: bennetplex
-      ADVERTISE_IP: http://192.168.9.140:32400/
-      PLEX_CLAIM: claim-YQC_xerGsGWdfyDkyhDs
     volumes:
     - type: volume
       source: bennetnas_plex_data
       target: /config
       volume:
         nocopy: true
-    - type: volume
-      source: bennetnas_plex_transcode
-      target: /transcode
-      volume:
-        nocopy: true
-    - type: volume
-      source: bennetnas_downloads
-      target: /downloads
-      volume:
-        nocopy: true
+#    - type: volume
+#      source: bennetnas_plex_transcode
+#      target: /transcode
+#      volume:
+#        nocopy: true
+#    - type: volume
+#      source: bennetnas_downloads
+#      target: /downloads
+#      volume:
+#        nocopy: true
     - type: volume
       source: bennetnas_media
-      target: /media
+      target: /tv
+      volume:
+    - type: volume
+      source: bennetnas_media
+      target: /movies
       volume:
         nocopy: true
     networks:
