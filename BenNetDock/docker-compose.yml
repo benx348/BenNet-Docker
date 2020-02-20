@@ -254,6 +254,7 @@ services:
       source: bennetnas_tv
       target: /tv
       volume:
+        nocopy: true
     - type: volume
       source: bennetnas_movies
       target: /movies
