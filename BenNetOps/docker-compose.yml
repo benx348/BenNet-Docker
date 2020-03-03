@@ -115,7 +115,7 @@ services:
       volume:
         nocopy: true
 
-
+#____________________________Not Working Yet_______________________________________
   registry-srv:
     container_name: Docker-Registry
     image: registry:latest
@@ -140,7 +140,7 @@ services:
     environment:
       - REGISTRY_URL=http://registry-srv:5000
       - DELETE_IMAGES=true
-          
+#____________________________Not Working Yet_______________________________________          
 
 #NFS mapped volumes to bennetnas
 volumes:
