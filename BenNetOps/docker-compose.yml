@@ -136,7 +136,7 @@ services:
     image: joxit/docker-registry-ui
     restart: always
     ports:
-      - 8002:80
+      - 8004:80
     environment:
       - REGISTRY_URL=http://localhost:5000
       - DELETE_IMAGES=true
