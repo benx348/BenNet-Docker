@@ -49,17 +49,17 @@ services:
 
 
   # Jenkins
-  jenkins:
-    container_name: Jenkins
-    image: 'jenkins/jenkins:lts'
-    restart: always
-    ports:
-      - '8003:8080'
-      - '5000:5000'
-    volumes:
-    - type: volume
-      source: bennetnas_jenkins_data
-      target: /var/jenkins_home
+#  jenkins:
+#    container_name: Jenkins
+#    image: 'jenkins/jenkins:lts'
+#    restart: always
+#    ports:
+#      - '8003:8080'
+#      - '5000:5000'
+#    volumes:
+#    - type: volume
+#      source: bennetnas_jenkins_data
+#      target: /var/jenkins_home
 
   # UbiquiTi Controller Software 
   Unifi:
