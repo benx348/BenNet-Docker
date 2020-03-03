@@ -123,8 +123,13 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./registry/storage:/var/lib/registry
+#      - ./registry/storage:/var/lib/registry
       - ./registry/config.yml:/etc/docker/registry/config.yml:ro
+      - type: volume
+        source: bennetnas_docker-registry_data
+        target: /var/lib/registry
+        volume:
+          nocopy: true
           
   registry-ui:
     container_name: Docker-Registry-UI
@@ -186,3 +191,9 @@ volumes:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
       device: ":/volume1/Docker/PROD/BenNetOps/GitLab/gitlab_data"
+#-------------------------------------------------------------
+  bennetnas_docker-registry_data:
+    driver_opts:
+      type: "nfs4"
+      o: "addr=192.168.10.120,nolock,soft,rw"
+      device: ":/volume1/Docker/PROD/BenNetOps/Docker-Registry/docker-registry_data"       
