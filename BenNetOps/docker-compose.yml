@@ -123,13 +123,13 @@ services:
     ports:
       - 5000:5000
     volumes:
-#      - ./registry/storage:/var/lib/registry
+      - ./registry/storage:/var/lib/registry
       - ./registry/config.yml:/etc/docker/registry/config.yml:ro
-      - type: volume
-        source: bennetnas_docker-registry_data
-        target: /var/lib/registry
-        volume:
-          nocopy: true
+#      - type: volume
+#        source: bennetnas_docker-registry_data
+#        target: /var/lib/registry
+#        volume:
+#          nocopy: true
           
   registry-ui:
     container_name: Docker-Registry-UI
