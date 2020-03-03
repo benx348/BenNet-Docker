@@ -138,7 +138,7 @@ services:
     ports:
       - 8004:80
     environment:
-      - REGISTRY_URL=http://localhost:5000
+      - REGISTRY_URL=http://registry-srv:5000
       - DELETE_IMAGES=true
           
 
