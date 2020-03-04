@@ -132,11 +132,11 @@ services:
         target: /var/lib/registry
         volume:
           nocopy: true
-      - type: volume
-        source: bennetnas_docker-registry_config
-        target: /etc/docker/registry/config.yml
-        volume:
-          nocopy: true
+#      - type: volume
+#        source: bennetnas_docker-registry_config
+#        target: /etc/docker/registry/config.yml
+#        volume:
+#          nocopy: true
 
   registry-ui:
     container_name: Docker-Registry-UI
