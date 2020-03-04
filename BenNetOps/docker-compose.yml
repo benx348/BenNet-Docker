@@ -55,7 +55,7 @@ services:
     restart: always
     ports:
       - '8003:8080'
-      - '5000:5000'
+      - '5001:5000'
     volumes:
     - type: volume
       source: bennetnas_jenkins_data
@@ -121,7 +121,7 @@ services:
     image: registry:latest
     restart: always
     ports:
-      - 5010:5000
+      - 5000:5000
     environment:
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
@@ -140,7 +140,7 @@ services:
     ports:
       - 8004:80
     environment:
-      - REGISTRY_URL=http://192.168.10.210:5010
+      - REGISTRY_URL=http://192.168.10.210:5000
       - DELETE_IMAGES=true
 #____________________________Not Working Yet_______________________________________          
 
