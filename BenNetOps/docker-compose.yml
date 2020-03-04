@@ -126,17 +126,12 @@ services:
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
 #      - ./registry/storage:/var/lib/registry
-#      - ./registry/config.yml:/etc/docker/registry/config.yml:ro
       - type: volume
         source: bennetnas_docker-registry_data
         target: /data
         volume:
           nocopy: true
-#      - type: volume
-#        source: bennetnas_docker-registry_config
-#        target: /etc/docker/registry/config.yml
-#        volume:
-#          nocopy: true
+
 
   registry-ui:
     container_name: Docker-Registry-UI
@@ -145,7 +140,7 @@ services:
     ports:
       - 8004:80
     environment:
-      - REGISTRY_URL=http://registry-srv:5000
+      - REGISTRY_URL=http://localhost:5000
       - DELETE_IMAGES=true
 #____________________________Not Working Yet_______________________________________          
 
