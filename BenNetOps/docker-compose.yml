@@ -49,20 +49,20 @@ services:
 
 
   # Jenkins
-#  jenkins:
-#    container_name: Jenkins
-#    image: 'jenkins/jenkins:lts'
-#    restart: always
-#    ports:
-#      - '8003:8080'
-#      - '5000:5000'
-#    volumes:
-#    - type: volume
-#      source: bennetnas_jenkins_data
-#      target: /var/jenkins_home
+  jenkins:
+    container_name: Jenkins
+    image: 'jenkins/jenkins:lts'
+    restart: always
+    ports:
+      - '8003:8080'
+      - '5000:5000'
+    volumes:
+    - type: volume
+      source: bennetnas_jenkins_data
+      target: /var/jenkins_home
 
   # UbiquiTi Controller Software 
-  Unifi:
+  unifi:
     container_name: UniFi_Controller
     image: linuxserver/unifi
     restart: always
@@ -90,7 +90,7 @@ services:
      retries: 10 
 
   # Pi Hole
-  Pi-Hole:
+  pi-hole:
     container_name: Pi-Hole
     image: 'pihole/pihole'
     restart: always
@@ -115,13 +115,13 @@ services:
       volume:
         nocopy: true
 
-#____________________________Not Working Yet_______________________________________
+# Docker Registry 
   registry-srv:
     container_name: Docker-Registry
     image: registry:latest
     restart: always
     ports:
-      - 5000:5000
+      - 5010:5000
     environment:
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
@@ -132,7 +132,7 @@ services:
         volume:
           nocopy: true
 
-
+# Docker Registry UI
   registry-ui:
     container_name: Docker-Registry-UI
     image: joxit/docker-registry-ui
@@ -140,7 +140,7 @@ services:
     ports:
       - 8004:80
     environment:
-      - REGISTRY_URL=http://localhost:5000
+      - REGISTRY_URL=http://192.168.10.210:5010
       - DELETE_IMAGES=true
 #____________________________Not Working Yet_______________________________________          
 
