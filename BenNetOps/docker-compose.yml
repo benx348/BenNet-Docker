@@ -129,7 +129,7 @@ services:
 #      - ./registry/config.yml:/etc/docker/registry/config.yml:ro
       - type: volume
         source: bennetnas_docker-registry_data
-        target: /var/lib/registry
+        target: /data
         volume:
           nocopy: true
 #      - type: volume
