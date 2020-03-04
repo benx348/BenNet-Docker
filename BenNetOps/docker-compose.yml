@@ -122,17 +122,19 @@ services:
     restart: always
     ports:
       - 5000:5000
+    environment:
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
 #      - ./registry/storage:/var/lib/registry
 #      - ./registry/config.yml:/etc/docker/registry/config.yml:ro
       - type: volume
         source: bennetnas_docker-registry_data
-        target: /etc/docker/registry/config.yml
+        target: /var/lib/registry
         volume:
           nocopy: true
       - type: volume
         source: bennetnas_docker-registry_config
-        target: /var/lib/registry
+        target: /etc/docker/registry/config.yml
         volume:
           nocopy: true
 
