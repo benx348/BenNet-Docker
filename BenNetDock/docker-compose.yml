@@ -28,12 +28,12 @@ services:
     links:
     - nextcloud-db
     volumes:
-      - ./nextcloud-db:/var/www/html
-#      - type: volume
-#        source: bennetnas_nextcloud_data
-#        target: /var/www/html
-#        volume:
-#          nocopy: true
+#      - ./nextcloud-db:/var/www/html
+      - type: volume
+        source: bennetnas_nextcloud_data
+        target: /var/www/html
+        volume:
+          nocopy: true
     restart: always
     networks:
       nextcloud:
@@ -44,12 +44,12 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
     volumes:
-      - ./nextcloud-ui:/var/lib/mysql
-#      - type: volume
-#        source: bennetnas_nextcloud-db_data
-#        target: /var/lib/mysql
-#        volume:
-#          nocopy: true
+#      - ./nextcloud-ui:/var/lib/mysql
+      - type: volume
+        source: bennetnas_nextcloud-db_data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
     environment:
       - MYSQL_ROOT_PASSWORD=qwe123
       - MYSQL_PASSWORD=qwe123
