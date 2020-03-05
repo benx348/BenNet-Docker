@@ -28,10 +28,10 @@ services:
     links:
     - nextcloud-db
     volumes:
-#      - ./nextcloud-db:/var/www/html
+      - ./nextcloud-db:/var/www/html
       - type: volume
         source: bennetnas_nextcloud_data
-        target: /var/www/html
+        target: /fixthisshit
         volume:
           nocopy: true
     restart: always
@@ -44,10 +44,10 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
     volumes:
-#      - ./nextcloud-ui:/var/lib/mysql
+      - ./nextcloud-ui:/var/lib/mysql
       - type: volume
         source: bennetnas_nextcloud-db_data
-        target: /var/lib/mysql
+        target: /fixthisshit
         volume:
           nocopy: true
     environment:
@@ -423,12 +423,12 @@ volumes:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/NextCloud/DB/nextcloud-db_data"
+      device: ":/volume1/Docker/PROD/BenNetDock/NextCloud"
   bennetnas_nextcloud-db_data:
     driver_opts:
       type: "nfs4"
       o: "addr=192.168.10.120,nolock,soft,rw"
-      device: ":/volume1/Docker/PROD/BenNetDock/NextCloud/App/nextcloud_data"  
+      device: ":/volume1/Docker/PROD/BenNetDock/NextCloud"  
 ###############################
   bennetnas_deluge_data:
     driver_opts:
