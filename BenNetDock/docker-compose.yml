@@ -28,10 +28,10 @@ services:
     links:
     - nextcloud-db
     volumes:
-      - ./nextcloud-db:/var/www/html
+#      - ./nextcloud-db:/var/www/html
       - type: volume
         source: bennetnas_nextcloud_data
-        target: /fixthisshit
+        target: /var/www/html
         volume:
           nocopy: true
     restart: always
@@ -44,10 +44,10 @@ services:
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
     volumes:
-      - ./nextcloud-ui:/var/lib/mysql
+#      - ./nextcloud-ui:/var/lib/mysql
       - type: volume
         source: bennetnas_nextcloud-db_data
-        target: /fixthisshit
+        target: /var/lib/mysql
         volume:
           nocopy: true
     environment:
