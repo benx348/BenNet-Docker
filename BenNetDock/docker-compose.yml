@@ -20,41 +20,41 @@ services:
     - 9000:9000/tcp
 ##########################################################################################
 # NextCloud Stack
-  nextcloud:  
-    container_name: NextCloud      
-    image: nextcloud
-    ports:
-    - 8015:80
-    links:
-    - nextcloud-db
-    volumes:
-      - type: volume
-        source: bennetnas_nextcloud_data
-        target: /var/www/html
-        volume:
-          nocopy: true
-    restart: always
-    networks:
-      nextcloud:
+#  nextcloud:  
+#    container_name: NextCloud      
+#    image: nextcloud
+#    ports:
+#    - 8015:80
+#    links:
+#    - nextcloud-db
+#    volumes:
+#      - type: volume
+#        source: bennetnas_nextcloud_data
+#        target: /var/www/html
+#        volume:
+#          nocopy: true
+#    restart: always
+#    networks:
+#      nextcloud:
 ##################################################
-  nextcloud-db:
-    image: mariadb
-    container_name: NextCloud-DB
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    restart: always
-    volumes:
-      - type: volume
-        source: bennetnas_nextcloud-db_data
-        target: /var/lib/mysql
-        volume:
-          nocopy: true
-    environment:
-      - MYSQL_ROOT_PASSWORD=qwe123
-      - MYSQL_PASSWORD=qwe123
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-    networks:
-      nextcloud:
+#  nextcloud-db:
+#    image: mariadb
+#    container_name: NextCloud-DB
+#    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+#    restart: always
+#    volumes:
+#      - type: volume
+#        source: bennetnas_nextcloud-db_data
+#        target: /var/lib/mysql
+#        volume:
+#          nocopy: true
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=qwe123
+#      - MYSQL_PASSWORD=qwe123
+#      - MYSQL_DATABASE=nextcloud
+#      - MYSQL_USER=nextcloud
+#    networks:
+#      nextcloud:
 ##########################################################################################
 # Torrent Stack
   # Deluge Torrent Client
