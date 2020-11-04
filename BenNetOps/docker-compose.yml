@@ -4,7 +4,7 @@ services:
   # Portainer Docker GUI 
   portainer:
     container_name: Portainer
-    image: portainer/portainer
+    image: portainer/portainer-ce
     restart: always
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
