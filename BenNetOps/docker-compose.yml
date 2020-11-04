@@ -64,7 +64,7 @@ services:
   # UbiquiTi Controller Software 
   unifi:
     container_name: UniFi_Controller
-    image: linuxserver/unifi
+    image: linuxserver/unifi-controller
     restart: always
     environment:
       PUID: 1000
